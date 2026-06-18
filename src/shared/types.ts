@@ -15,15 +15,6 @@ export type Place = {
   attributes?: Record<string, unknown>;
 };
 
-export type ChangeSummary = {
-  id: string;
-  label: string;
-  changedAt: string;
-  placeName?: string;
-  placeId?: string;
-  address?: string;
-};
-
 export type NewsEntry = {
   id: string;
   title: string;
@@ -32,9 +23,6 @@ export type NewsEntry = {
   categoryLabel: string;
   publishedAt?: string;
   tags: string[];
-  kind?: "news" | "change";
-  placeId?: string;
-  address?: string;
 };
 
 export type CategoryCount = {

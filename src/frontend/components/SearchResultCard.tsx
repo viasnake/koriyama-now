@@ -41,8 +41,6 @@ function toNewsEntry(item: SearchIndexItem): NewsEntry {
     category: item.category,
     categoryLabel: item.categoryLabel,
     publishedAt: item.publishedAt,
-    tags: item.tags ?? [],
-    kind: item.category === "changes" ? "change" : "news",
-    address: item.address
+    tags: item.tags ?? []
   };
 }

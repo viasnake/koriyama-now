@@ -36,7 +36,6 @@ export const placeCategoryAliases: Record<string, string> = {
 
 export const newsCategories = [
   { id: "all", label: "すべて" },
-  { id: "changes", label: "施設の更新" },
   { id: "life", label: "くらし" },
   { id: "event", label: "イベント" },
   { id: "childcare", label: "子育て" },

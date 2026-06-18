@@ -56,7 +56,6 @@ function toNewsSearchItem(entry: NewsEntry): SearchIndexItem {
     entry.title,
     entry.category,
     entry.categoryLabel,
-    entry.address,
     ...entry.tags
   ]
     .filter((value): value is string => Boolean(value))
@@ -68,7 +67,6 @@ function toNewsSearchItem(entry: NewsEntry): SearchIndexItem {
     name: entry.title,
     category: entry.category,
     categoryLabel: entry.categoryLabel,
-    address: entry.address,
     url: entry.link,
     publishedAt: entry.publishedAt,
     tags: entry.tags,

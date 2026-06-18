@@ -18,7 +18,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/map" element={<MapPage />} />
-          <Route path="/changes" element={<Navigate to="/news?category=changes" replace />} />
+          <Route path="/changes" element={<Navigate to="/news" replace />} />
           <Route path="/news" element={<News />} />
           <Route path="/about" element={<About />} />
           <Route path="/place/:id" element={<Place />} />

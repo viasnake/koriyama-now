@@ -1,6 +1,5 @@
 import type {
   CategoryCount,
-  ChangeSummary,
   FeatureCollection,
   HealthSummary,
   NewsEntry,
@@ -12,7 +11,6 @@ const categoryLabels: Record<string, string> = {
   aed: "AED",
   business: "事業者",
   childcare: "子育て",
-  changes: "施設の更新",
   city_admin: "施設・行政",
   disaster: "防災",
   education: "学校",
@@ -89,36 +87,6 @@ export function normalizePlace(value: unknown): Place | null {
     firstSeenAt: toStringValue(record.first_seen_at),
     lastSeenAt: toStringValue(record.last_seen_at),
     attributes
-  };
-}
-
-export function normalizeChanges(value: unknown): ChangeSummary[] {
-  const list = Array.isArray(value) ? value : [];
-  return list.map(normalizeChange).filter((change): change is ChangeSummary => change !== null);
-}
-
-export function normalizeChange(value: unknown): ChangeSummary | null {
-  const record = asRecord(value);
-  if (!record) {
-    return null;
-  }
-
-  const id = toStringValue(record.id);
-  const type = toStringValue(record.change_type) ?? "changed";
-  const changedAt = toStringValue(record.changed_at);
-  if (!id || !changedAt) {
-    return null;
-  }
-
-  const place = normalizePlace(record.after ?? record.before);
-
-  return {
-    id,
-    label: changeLabel(type),
-    changedAt,
-    placeName: place?.name,
-    placeId: place?.id,
-    address: place?.address
   };
 }
 
@@ -256,22 +224,6 @@ function normalizePointFeature(value: unknown): PointFeature | null {
       unofficial: typeof properties.unofficial === "boolean" ? properties.unofficial : undefined
     }
   };
-}
-
-function changeLabel(type: string): string {
-  if (type.includes("created")) {
-    return "新しい地点が追加されました";
-  }
-
-  if (type.includes("deleted")) {
-    return "地点が削除されました";
-  }
-
-  if (type.includes("source")) {
-    return "元データが更新されました";
-  }
-
-  return "施設情報が更新されました";
 }
 
 function normalizeAttributes(value: unknown): Record<string, unknown> | undefined {

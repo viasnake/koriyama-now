@@ -3,7 +3,6 @@ import { join } from "node:path";
 import type {
   BuildMeta,
   CategoryCount,
-  ChangeSummary,
   HealthSummary,
   HomeData,
   NewsEntry,
@@ -11,11 +10,10 @@ import type {
   Place,
   PlaceListData
 } from "../src/shared/types";
-import { changesToNewsEntries, mergeAnnouncements } from "../src/shared/announcements";
+import { mergeAnnouncements } from "../src/shared/announcements";
 import {
   categoryCountsFromHealth,
   categoryLabel,
-  normalizeChanges,
   normalizeHealth,
   normalizeNews,
   normalizePlaces,
@@ -69,15 +67,14 @@ async function main(): Promise<void> {
 
   try {
     const generatedAt = new Date().toISOString();
-    const [places, changes, news, health] = await Promise.all([
+    const [places, news, health] = await Promise.all([
       fetchAllPlaces(),
-      fetchChanges(),
       fetchNews(),
       fetchHealth()
     ]);
     const categoryCounts = health ? categoryCountsFromHealth(health.raw) : categoryCountsFromPlaces(places);
     const healthSummary = health?.summary ?? fallbackHealth(places);
-    const announcements = mergeAnnouncements(news, changes);
+    const announcements = mergeAnnouncements(news);
 
     const home: HomeData = {
       generated_at: generatedAt,
@@ -139,11 +136,6 @@ async function fetchAllPlaces(): Promise<Place[]> {
   return places;
 }
 
-async function fetchChanges() {
-  const json = await fetchUpstream("/changes", { limit: 100, offset: 0 });
-  return normalizeChanges(getData(json));
-}
-
 async function fetchNews() {
   const json = await fetchUpstream("/rss/entries", { limit: 100, offset: 0 });
   return normalizeNews(getData(json));
@@ -197,7 +189,6 @@ function buildFeaturedTopics(news: NewsEntry[], referenceDate: string): NewsEntr
   const seenTitles = new Set<string>();
 
   return news
-    .filter((entry) => entry.kind !== "change")
     .filter((entry) => {
       const publishedTimestamp = timestamp(entry.publishedAt);
       return publishedTimestamp !== undefined && publishedTimestamp >= cutoff;

@@ -9,7 +9,8 @@ import { generatedFiles, getGeneratedJson } from "../lib/staticDataClient";
 
 export default function News() {
   const [params, setParams] = useSearchParams();
-  const category = params.get("category") ?? "all";
+  const requestedCategory = params.get("category") ?? "all";
+  const category = newsCategories.some((item) => item.id === requestedCategory) ? requestedCategory : "all";
   const newsQuery = useQuery({
     queryKey: ["news"],
     queryFn: () => getGeneratedJson<NewsListData>(generatedFiles.news)
@@ -20,7 +21,7 @@ export default function News() {
     <div className="page">
       <header className="compact-head">
         <h1>お知らせ</h1>
-        <p>市のお知らせと施設情報の更新を、カテゴリ別に見られます。</p>
+        <p>市のお知らせをカテゴリ別に見られます。</p>
       </header>
 
       <div className="news-category-scroll">
