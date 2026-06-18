@@ -11,6 +11,9 @@ on:
 permissions:
   contents: read
 
+env:
+  VITE_GOOGLE_PSE_CX: ${{ vars.VITE_GOOGLE_PSE_CX }}
+
 concurrency:
   group: deploy-${{ github.ref }}
   cancel-in-progress: false

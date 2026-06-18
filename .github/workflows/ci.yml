@@ -7,6 +7,9 @@ on:
 permissions:
   contents: read
 
+env:
+  VITE_GOOGLE_PSE_CX: ${{ vars.VITE_GOOGLE_PSE_CX }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
