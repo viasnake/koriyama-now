@@ -1,0 +1,42 @@
+{
+  "name": "koriyama-now",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "preview": "npm run build && wrangler dev --port 8787",
+    "generate:data": "tsx scripts/fetch-data.ts && tsx scripts/build-search-index.ts && tsx scripts/validate-generated.ts",
+    "build": "npm run generate:data && tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.worker.json --noEmit && vite build",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.worker.json --noEmit",
+    "cf-typegen": "wrangler types src/worker/env.d.ts",
+    "deploy": "npm run build && wrangler deploy",
+    "check:startup": "wrangler check startup"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.83.0",
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260617.0",
+    "@types/leaflet": "^1.9.14",
+    "@types/leaflet.markercluster": "^1.5.5",
+    "@types/node": "^25.9.3",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^6.0.2",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16",
+    "wrangler": "^4.76.0"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1",
+    "ws": "^8.21.0"
+  }
+}

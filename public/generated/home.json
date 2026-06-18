@@ -1,0 +1,379 @@
+{
+  "generated_at": "2026-06-18T09:58:51.417Z",
+  "health": {
+    "status": "ok",
+    "datasetsTotal": 8,
+    "placesCount": 1317,
+    "lastSuccessAt": "2026-06-17T18:00:30.065Z",
+    "rssLastSuccessAt": "2026-06-18T09:00:20.522Z"
+  },
+  "today_updates": [
+    "1,317件の施設情報を確認できます",
+    "明健中学校を追加しました",
+    "お知らせ: 郡山市市民相談センターの案内"
+  ],
+  "news": [
+    {
+      "id": "rss_47d7cd46c78aab5d",
+      "title": "郡山市市民相談センターの案内",
+      "link": "https://www.city.koriyama.lg.jp/soshiki/33/4932.html",
+      "category": "life",
+      "categoryLabel": "くらし",
+      "publishedAt": "2026-06-18T08:00:00.000Z",
+      "tags": [
+        "市民・NPO活動推進課",
+        "市民相談センター",
+        "まちづくり",
+        "くらし"
+      ],
+      "kind": "news"
+    },
+    {
+      "id": "rss_5bd63dbe781a7779",
+      "title": "郡山市休日・夜間急病センター受診者数",
+      "link": "https://www.city.koriyama.lg.jp/soshiki/70/164430.html",
+      "category": "disaster",
+      "categoryLabel": "防災",
+      "publishedAt": "2026-06-18T02:00:00.000Z",
+      "tags": [
+        "防災",
+        "保健所健康政策課",
+        "消防",
+        "防災・防犯",
+        "くらし"
+      ],
+      "kind": "news"
+    },
+    {
+      "id": "rss_819ccb76a6d645a9",
+      "title": "令和8年度ゼロカーボン推進事業補助金について",
+      "link": "https://www.city.koriyama.lg.jp/soshiki/54/2443.html",
+      "category": "business",
+      "categoryLabel": "business",
+      "publishedAt": "2026-06-18T00:00:00.000Z",
+      "tags": [
+        "補助金",
+        "環境政策課",
+        "気候変動対策",
+        "環境・自然保護",
+        "くらし"
+      ],
+      "kind": "news"
+    },
+    {
+      "id": "rss_53d196baf5d0896b",
+      "title": "令和8年度次世代自動車導入補助金について",
+      "link": "https://www.city.koriyama.lg.jp/soshiki/54/160255.html",
+      "category": "business",
+      "categoryLabel": "business",
+      "publishedAt": "2026-06-18T00:00:00.000Z",
+      "tags": [
+        "補助金",
+        "環境政策課",
+        "気候変動対策",
+        "環境・自然保護",
+        "くらし"
+      ],
+      "kind": "news"
+    },
+    {
+      "id": "rss_d0fe02e9420b048c",
+      "title": "【審査結果公表】（受付終了）こども食堂開設体験事業業務委託に係る公募型プロポーザルの実施について",
+      "link": "https://www.city.koriyama.lg.jp/site/keiyakuportal/184308.html",
+      "category": "life",
+      "categoryLabel": "くらし",
+      "publishedAt": "2026-06-17T23:30:00.000Z",
+      "tags": [
+        "こども総務企画課"
+      ],
+      "kind": "news"
+    },
+    {
+      "id": "rss_f8f1116e55c5394b",
+      "title": "【協力店募集中！】フードシェアリングサービス「こおりやまタベスケ」",
+      "link": "https://www.city.koriyama.lg.jp/soshiki/55/85279.html",
+      "category": "life",
+      "categoryLabel": "くらし",
+      "publishedAt": "2026-06-17T23:30:00.000Z",
+      "tags": [
+        "ごみ",
+        "ごみ減量推進課",
+        "ごみの減量",
+        "ごみ・リサイクル",
+        "くらし"
+      ],
+      "kind": "news"
+    }
+  ],
+  "places": [
+    {
+      "id": "place_public_facilities_6ca0399322",
+      "name": "(一財)太田綜合病院附属桔梗保育園",
+      "category": "facility",
+      "categoryLabel": "公共施設",
+      "subcategory": "public_facilities",
+      "address": "桜木二丁目21-26",
+      "lat": 37.409109,
+      "lng": 140.367303,
+      "phone": "024-925-5588",
+      "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
+      "firstSeenAt": "2026-05-27T03:00:45.846Z",
+      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "attributes": {
+        "raw": {
+          "大分類": "保育所・保育園・幼稚園",
+          "小分類": "その他の私立保育園",
+          "施設名": "（一財）太田綜合病院附属桔梗保育園",
+          "電話": "024-925-5588",
+          "ファックス": "024-925-5588",
+          "メールアドレス": "",
+          "住所": "桜木二丁目21-26",
+          "備考": "",
+          "経度": "140.367303",
+          "緯度": "37.409109"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "place_childcare_facilities_6ca0399322",
+      "name": "(一財)太田綜合病院附属桔梗保育園",
+      "category": "childcare",
+      "categoryLabel": "子育て",
+      "subcategory": "childcare_facilities",
+      "address": "桜木二丁目21-26",
+      "lat": 37.409109,
+      "lng": 140.367303,
+      "phone": "024-925-5588",
+      "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
+      "firstSeenAt": "2026-05-27T03:00:45.846Z",
+      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "attributes": {
+        "raw": {
+          "大分類": "保育所・保育園・幼稚園",
+          "小分類": "その他の私立保育園",
+          "施設名": "（一財）太田綜合病院附属桔梗保育園",
+          "電話": "024-925-5588",
+          "ファックス": "024-925-5588",
+          "メールアドレス": "",
+          "住所": "桜木二丁目21-26",
+          "備考": "",
+          "経度": "140.367303",
+          "緯度": "37.409109"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "place_public_facilities_2ecb546fa8",
+      "name": "(一財)太田綜合病院附属熱海桔梗保育園",
+      "category": "facility",
+      "categoryLabel": "公共施設",
+      "subcategory": "public_facilities",
+      "address": "熱海町熱海四丁目294",
+      "lat": 37.482843,
+      "lng": 140.26668,
+      "phone": "024-984-5588",
+      "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
+      "firstSeenAt": "2026-05-27T03:00:45.846Z",
+      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "attributes": {
+        "raw": {
+          "大分類": "保育所・保育園・幼稚園",
+          "小分類": "その他の私立保育園",
+          "施設名": "（一財）太田綜合病院附属熱海桔梗保育園",
+          "電話": "024-984-5588",
+          "ファックス": "024-984-5588",
+          "メールアドレス": "",
+          "住所": "熱海町熱海四丁目294",
+          "備考": "",
+          "経度": "140.26668",
+          "緯度": "37.482843"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "place_childcare_facilities_2ecb546fa8",
+      "name": "(一財)太田綜合病院附属熱海桔梗保育園",
+      "category": "childcare",
+      "categoryLabel": "子育て",
+      "subcategory": "childcare_facilities",
+      "address": "熱海町熱海四丁目294",
+      "lat": 37.482843,
+      "lng": 140.26668,
+      "phone": "024-984-5588",
+      "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
+      "firstSeenAt": "2026-05-27T03:00:45.846Z",
+      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "attributes": {
+        "raw": {
+          "大分類": "保育所・保育園・幼稚園",
+          "小分類": "その他の私立保育園",
+          "施設名": "（一財）太田綜合病院附属熱海桔梗保育園",
+          "電話": "024-984-5588",
+          "ファックス": "024-984-5588",
+          "メールアドレス": "",
+          "住所": "熱海町熱海四丁目294",
+          "備考": "",
+          "経度": "140.26668",
+          "緯度": "37.482843"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "place_public_facilities_beffef95f6",
+      "name": "(一財)慈山会医学研究所付属坪井病院院内託児所",
+      "category": "facility",
+      "categoryLabel": "公共施設",
+      "subcategory": "public_facilities",
+      "address": "成山町76",
+      "lat": 37.363611,
+      "lng": 140.360819,
+      "phone": "024-946-0933",
+      "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
+      "firstSeenAt": "2026-05-27T03:00:45.846Z",
+      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "attributes": {
+        "raw": {
+          "大分類": "保育所・保育園・幼稚園",
+          "小分類": "その他の私立保育園",
+          "施設名": "（一財）慈山会医学研究所付属坪井病院院内託児所",
+          "電話": "024-946-0933",
+          "ファックス": "024-945-1802",
+          "メールアドレス": "",
+          "住所": "成山町76",
+          "備考": "",
+          "経度": "140.360819",
+          "緯度": "37.363611"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "place_childcare_facilities_beffef95f6",
+      "name": "(一財)慈山会医学研究所付属坪井病院院内託児所",
+      "category": "childcare",
+      "categoryLabel": "子育て",
+      "subcategory": "childcare_facilities",
+      "address": "成山町76",
+      "lat": 37.363611,
+      "lng": 140.360819,
+      "phone": "024-946-0933",
+      "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
+      "firstSeenAt": "2026-05-27T03:00:45.846Z",
+      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "attributes": {
+        "raw": {
+          "大分類": "保育所・保育園・幼稚園",
+          "小分類": "その他の私立保育園",
+          "施設名": "（一財）慈山会医学研究所付属坪井病院院内託児所",
+          "電話": "024-946-0933",
+          "ファックス": "024-945-1802",
+          "メールアドレス": "",
+          "住所": "成山町76",
+          "備考": "",
+          "経度": "140.360819",
+          "緯度": "37.363611"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "place_public_facilities_fb772b0691",
+      "name": "(一財)脳神経疾患研究所附属総合南東北病院たんぽぽ保育所",
+      "category": "facility",
+      "categoryLabel": "公共施設",
+      "subcategory": "public_facilities",
+      "address": "八山田七丁目129",
+      "lat": 37.42211,
+      "lng": 140.383023,
+      "phone": "024-934-5714",
+      "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
+      "firstSeenAt": "2026-05-27T03:00:45.846Z",
+      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "attributes": {
+        "raw": {
+          "大分類": "保育所・保育園・幼稚園",
+          "小分類": "その他の私立保育園",
+          "施設名": "（一財）脳神経疾患研究所附属総合南東北病院たんぽぽ保育所",
+          "電話": "024-934-5714",
+          "ファックス": "",
+          "メールアドレス": "",
+          "住所": "八山田七丁目129",
+          "備考": "",
+          "経度": "140.383023",
+          "緯度": "37.42211"
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "place_childcare_facilities_fb772b0691",
+      "name": "(一財)脳神経疾患研究所附属総合南東北病院たんぽぽ保育所",
+      "category": "childcare",
+      "categoryLabel": "子育て",
+      "subcategory": "childcare_facilities",
+      "address": "八山田七丁目129",
+      "lat": 37.42211,
+      "lng": 140.383023,
+      "phone": "024-934-5714",
+      "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
+      "firstSeenAt": "2026-05-27T03:00:45.846Z",
+      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "attributes": {
+        "raw": {
+          "大分類": "保育所・保育園・幼稚園",
+          "小分類": "その他の私立保育園",
+          "施設名": "（一財）脳神経疾患研究所附属総合南東北病院たんぽぽ保育所",
+          "電話": "024-934-5714",
+          "ファックス": "",
+          "メールアドレス": "",
+          "住所": "八山田七丁目129",
+          "備考": "",
+          "経度": "140.383023",
+          "緯度": "37.42211"
+        },
+        "warnings": []
+      }
+    }
+  ],
+  "category_counts": [
+    {
+      "id": "schools",
+      "label": "学校",
+      "count": 92
+    },
+    {
+      "id": "medical_institutions",
+      "label": "医療",
+      "count": 6
+    },
+    {
+      "id": "childcare_facilities",
+      "label": "子育て",
+      "count": 182
+    },
+    {
+      "id": "public_toilets",
+      "label": "トイレ",
+      "count": 32
+    },
+    {
+      "id": "public_wifi",
+      "label": "Wi-Fi",
+      "count": 53
+    },
+    {
+      "id": "aed",
+      "label": "AED",
+      "count": 494
+    },
+    {
+      "id": "public_facilities",
+      "label": "公共施設",
+      "count": 498
+    }
+  ]
+}

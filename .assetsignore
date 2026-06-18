@@ -1,0 +1,4 @@
+*.map
+*.md
+node_modules/
+.git/
