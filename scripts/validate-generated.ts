@@ -51,7 +51,7 @@ const checks: Check[] = [
     name: "build-meta.json",
     validate: (value) =>
       hasGeneratedAt(value) &&
-      value.source === "koriyama-open-data-hub" &&
+      value.source === "civic-koriyama-data" &&
       value.mode === "scheduled-static-build"
         ? undefined
         : "build-meta.json must include source, mode and generated_at"
@@ -82,8 +82,8 @@ async function main(): Promise<void> {
   console.log("generated data validation passed");
 }
 
-function hasGeneratedAt(value: Record<string, unknown>): value is Record<string, unknown> & { generated_at: string } {
-  return typeof value.generated_at === "string" && value.generated_at.length > 0;
+function hasGeneratedAt(value: unknown): value is Record<string, unknown> & { generated_at: string } {
+  return isRecord(value) && typeof value.generated_at === "string" && value.generated_at.length > 0;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

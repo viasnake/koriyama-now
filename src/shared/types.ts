@@ -91,7 +91,7 @@ export type SearchIndexData = {
 
 export type BuildMeta = {
   generated_at: string;
-  source: "koriyama-open-data-hub";
+  source: "civic-koriyama-data";
   api_base: string;
   mode: "scheduled-static-build";
   status: "ok" | "stale";

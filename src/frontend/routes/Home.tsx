@@ -29,7 +29,7 @@ export default function Home() {
     <div className="page">
       <header className="masthead">
         <p className="masthead__eyebrow">Koriyama civic data</p>
-        <h1>こおりやまの今</h1>
+        <h1>Civic Koriyama</h1>
         <p>郡山のお知らせと、身近な施設をまとめて見られます。</p>
         <div className="home-search-panel">
           {hasOfficialSearch ? (

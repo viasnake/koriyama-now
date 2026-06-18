@@ -2,7 +2,7 @@
 
 ## プロジェクト方針
 
-「こおりやまの今」は、郡山市の公開情報をスマートフォンで読みやすくまとめる非公式サイトです。
+Civic Koriyama は、郡山市の公開情報をスマートフォンで読みやすくまとめる非公式サイトです。
 
 秒単位の鮮度は追いません。表示の速さ、壊れにくさ、運用コストの低さを優先します。ユーザーがページを開いたときは外部 API を呼ばず、定期ビルドで作った JSON を読みます。
 
@@ -11,7 +11,7 @@
 ```txt
 scheduled build
   -> scripts/fetch-data.ts
-  -> Koriyama Open Data Hub API
+  -> Civic Koriyama Data API
   -> public/generated/*.json
   -> Vite build
   -> Cloudflare Workers Static Assets
@@ -113,7 +113,7 @@ npm run build
 
 ## データ更新
 
-`npm run generate:data` は Koriyama Open Data Hub API からデータを取得し、`public/generated/*.json` を作ります。
+`npm run generate:data` は Civic Koriyama Data API からデータを取得し、`public/generated/*.json` を作ります。
 
 生成元 API を差し替える場合は、`UPSTREAM_API_BASE` を指定します。
 

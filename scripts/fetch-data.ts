@@ -22,7 +22,7 @@ import {
   placesToFeatureCollection
 } from "../src/shared/normalize";
 
-const apiBase = process.env.UPSTREAM_API_BASE ?? "https://koriyama-open-data-hub.alflag.org/api/v2";
+const apiBase = process.env.UPSTREAM_API_BASE ?? "https://civic-koriyama-data.alflag.org/api/v2";
 const generatedDir = join(process.cwd(), "public", "generated");
 
 type QueryValue = string | number | boolean | undefined | null;
@@ -64,7 +64,7 @@ async function main(): Promise<void> {
 
     const buildMeta: BuildMeta = {
       generated_at: generatedAt,
-      source: "koriyama-open-data-hub",
+      source: "civic-koriyama-data",
       api_base: apiBase,
       mode: "scheduled-static-build",
       status: "ok",
@@ -137,7 +137,7 @@ async function fetchUpstream(path: string, query: Record<string, QueryValue> = {
   const response = await fetch(url, {
     headers: {
       accept: "application/json",
-      "user-agent": "koriyama-now-static-build/0.1"
+      "user-agent": "civic-koriyama-static-build/0.1"
     }
   });
 
@@ -216,7 +216,7 @@ async function preserveExistingGenerated(error: unknown): Promise<void> {
   const previousMeta = await readExistingMeta();
   const buildMeta: BuildMeta = {
     generated_at: previousMeta?.generated_at ?? new Date().toISOString(),
-    source: "koriyama-open-data-hub",
+    source: "civic-koriyama-data",
     api_base: apiBase,
     mode: "scheduled-static-build",
     status: "stale",

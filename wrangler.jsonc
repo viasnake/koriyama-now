@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "koriyama-now",
+  "name": "civic-koriyama",
   "main": "src/worker/index.ts",
   "compatibility_date": "2026-06-17",
   "assets": {

@@ -16,7 +16,7 @@ export default function About() {
 
       <Section title="非公式サイトです">
         <p>
-          「こおりやまの今」は郡山市が運営する公式サイトではありません。掲載内容は公開情報をもとにしていますが、
+          Civic Koriyama は郡山市が運営する公式サイトではありません。掲載内容は公開情報をもとにしていますが、
           最新の情報や手続きは郡山市公式サイトで確認してください。
         </p>
         <a className="primary-link" href="https://www.city.koriyama.lg.jp/" target="_blank" rel="noreferrer">
