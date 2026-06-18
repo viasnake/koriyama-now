@@ -10,6 +10,7 @@ import type {
 
 const categoryLabels: Record<string, string> = {
   aed: "AED",
+  business: "事業者",
   childcare: "子育て",
   changes: "施設の更新",
   city_admin: "施設・行政",

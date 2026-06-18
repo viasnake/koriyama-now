@@ -1,6 +1,22 @@
 {
-  "generated_at": "2026-06-18T09:58:51.417Z",
+  "generated_at": "2026-06-18T18:12:12.217Z",
   "entries": [
+    {
+      "id": "rss_2cce4b6b243d8a14",
+      "title": "中央公民館学習スペースの開放状況",
+      "link": "https://www.city.koriyama.lg.jp/soshiki/152/124436.html",
+      "category": "childcare",
+      "categoryLabel": "子育て",
+      "publishedAt": "2026-06-18T11:00:00.000Z",
+      "tags": [
+        "子育て",
+        "中央公民館",
+        "教育施設",
+        "教育・生涯学習",
+        "子育て・教育"
+      ],
+      "kind": "news"
+    },
     {
       "id": "rss_47d7cd46c78aab5d",
       "title": "郡山市市民相談センターの案内",
@@ -13,6 +29,23 @@
         "市民相談センター",
         "まちづくり",
         "くらし"
+      ],
+      "kind": "news"
+    },
+    {
+      "id": "rss_0b2180b4f5a58c3e",
+      "title": "【中央公民館】中央市民学校",
+      "link": "https://www.city.koriyama.lg.jp/site/manabi/56341.html",
+      "category": "childcare",
+      "categoryLabel": "子育て",
+      "publishedAt": "2026-06-18T04:00:00.000Z",
+      "tags": [
+        "子育て",
+        "学校",
+        "中央公民館",
+        "教育計画・事業",
+        "教育・生涯学習",
+        "子育て・教育"
       ],
       "kind": "news"
     },
@@ -37,7 +70,7 @@
       "title": "令和8年度ゼロカーボン推進事業補助金について",
       "link": "https://www.city.koriyama.lg.jp/soshiki/54/2443.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-18T00:00:00.000Z",
       "tags": [
         "補助金",
@@ -53,7 +86,7 @@
       "title": "令和8年度次世代自動車導入補助金について",
       "link": "https://www.city.koriyama.lg.jp/soshiki/54/160255.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-18T00:00:00.000Z",
       "tags": [
         "補助金",
@@ -247,7 +280,7 @@
       "title": "介護職員等処遇改善加算について",
       "link": "https://www.city.koriyama.lg.jp/soshiki/68/2250.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-16T15:00:00.000Z",
       "tags": [
         "事業者",
@@ -324,7 +357,7 @@
       "title": "郡山市中央図書館諸設備運転保守業務委託（長期継続契約）に係る制限付一般競争入札（電子入札）について",
       "link": "https://www.city.koriyama.lg.jp/site/keiyakuportal/183775.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-16T05:15:00.000Z",
       "tags": [
         "入札",
@@ -338,7 +371,7 @@
       "title": "郡山市中央図書館清掃業務委託（長期継続契約）に係る制限付一般競争入札（電子入札）について",
       "link": "https://www.city.koriyama.lg.jp/site/keiyakuportal/183779.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-16T05:15:00.000Z",
       "tags": [
         "入札",
@@ -489,7 +522,7 @@
       "title": "飼い主募集の犬・猫について",
       "link": "https://www.city.koriyama.lg.jp/soshiki/74/7185.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-15T15:00:00.000Z",
       "tags": [
         "募集",
@@ -590,7 +623,7 @@
       "title": "上下水道局の入札情報",
       "link": "https://www.city.koriyama.lg.jp/soshiki/204/5674.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-15T07:00:00.000Z",
       "tags": [
         "入札",
@@ -705,7 +738,7 @@
       "title": "会計年度任用職員の募集【上下水道局】",
       "link": "https://www.city.koriyama.lg.jp/site/jougesuidou/5719.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-14T15:00:00.000Z",
       "tags": [
         "募集",
@@ -982,7 +1015,7 @@
       "title": "郡山市富久山クリーンセンター自家用電気工作物ほか修繕に係る制限付一般競争入札について",
       "link": "https://www.city.koriyama.lg.jp/site/keiyakuportal/183271.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-11T23:30:00.000Z",
       "tags": [
         "入札",
@@ -1040,7 +1073,7 @@
       "title": "令和8年4月1日から、森林病害虫対策補助金制度が始まりました！",
       "link": "https://www.city.koriyama.lg.jp/soshiki/113/171080.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-11T15:00:00.000Z",
       "tags": [
         "補助金",
@@ -1248,7 +1281,7 @@
       "title": "富久山デイ・サービスセンター「地域交流事業」受講生募集",
       "link": "https://www.city.koriyama.lg.jp/soshiki/66/43358.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-10T23:00:00.000Z",
       "tags": [
         "募集",
@@ -1279,7 +1312,7 @@
       "title": "郡山市中小企業賃上げ支援補助金",
       "link": "https://www.city.koriyama.lg.jp/soshiki/119/170198.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-10T15:00:00.000Z",
       "tags": [
         "補助金",
@@ -1449,34 +1482,6 @@
         "報道発表（プレスリリース）",
         "広報・広聴",
         "市政情報"
-      ],
-      "kind": "news"
-    },
-    {
-      "id": "rss_61ee2e340c8336fc",
-      "title": "郡山市休日・夜間急病センター受診者数",
-      "link": "https://www.city.koriyama.lg.jp/soshiki/70/164430.html",
-      "category": "disaster",
-      "categoryLabel": "防災",
-      "publishedAt": "2026-06-10T02:00:00.000Z",
-      "tags": [
-        "防災",
-        "保健所健康政策課",
-        "消防",
-        "防災・防犯",
-        "くらし"
-      ],
-      "kind": "news"
-    },
-    {
-      "id": "rss_af14802cd731d634",
-      "title": "令和学級",
-      "link": "https://www.city.koriyama.lg.jp/soshiki/166/64660.html",
-      "category": "life",
-      "categoryLabel": "くらし",
-      "publishedAt": "2026-06-10T01:30:00.000Z",
-      "tags": [
-        "緑ケ丘地域公民館"
       ],
       "kind": "news"
     },

@@ -13,11 +13,12 @@ const checks: Check[] = [
     name: "home.json",
     validate: (value) =>
       hasGeneratedAt(value) &&
+      Array.isArray(value.featured_topics) &&
       Array.isArray(value.news) &&
       Array.isArray(value.places) &&
       Array.isArray(value.category_counts)
         ? undefined
-        : "home.json must include generated_at and home arrays"
+        : "home.json must include generated_at, featured_topics and home arrays"
   },
   {
     name: "news.json",

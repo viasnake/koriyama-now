@@ -24,6 +24,8 @@ export default function Home() {
   });
 
   const home = homeQuery.data;
+  const featuredTopicIds = new Set(home?.featured_topics.map((entry) => entry.id) ?? []);
+  const latestNews = home?.news.filter((entry) => !featuredTopicIds.has(entry.id)).slice(0, 3) ?? [];
 
   return (
     <div className="page">
@@ -76,20 +78,20 @@ export default function Home() {
         ) : null}
       </header>
 
-      <Section title="今日の更新">
-        {homeQuery.isLoading ? <CardSkeleton /> : null}
-        {homeQuery.isError ? <SectionError message="今日の更新を取得できませんでした。" /> : null}
-        {home ? (
-          <div className="today-list">
-            {(home.today_updates.length > 0 ? home.today_updates : ["現在の更新状況を確認しています。"]).map((item) => (
-              <div className="today-list__item" key={item}>
-                <span />
-                <p>{item}</p>
-              </div>
+      {homeQuery.isLoading ? (
+        <Section title="注目トピック">
+          <CardSkeleton />
+        </Section>
+      ) : null}
+      {home?.featured_topics.length ? (
+        <Section title="注目トピック">
+          <div className="featured-topic-list">
+            {home.featured_topics.map((entry) => (
+              <NewsCard key={entry.id} entry={entry} />
             ))}
           </div>
-        ) : null}
-      </Section>
+        </Section>
+      ) : null}
 
       <Section
         title="お知らせ"
@@ -101,7 +103,7 @@ export default function Home() {
       >
         {homeQuery.isLoading ? <CardSkeleton /> : null}
         {homeQuery.isError ? <SectionError message="お知らせを取得できませんでした。" /> : null}
-        {home?.news.slice(0, 3).map((entry) => <NewsCard key={entry.id} entry={entry} />)}
+        {latestNews.map((entry) => <NewsCard key={entry.id} entry={entry} />)}
       </Section>
 
       <Section title="施設カテゴリ">

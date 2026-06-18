@@ -363,34 +363,17 @@ a {
   color: white;
 }
 
-.today-list {
+.featured-topic-list {
   display: grid;
   gap: 10px;
 }
 
-.today-list__item {
-  display: grid;
-  grid-template-columns: 12px minmax(0, 1fr);
-  gap: 10px;
-  align-items: start;
-  padding: 13px 14px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--surface);
-}
-
-.today-list__item span {
-  width: 10px;
-  height: 10px;
-  margin-top: 7px;
-  border-radius: 50%;
-  background: var(--sun);
-  box-shadow: 0 0 0 5px rgb(224 172 53 / 0.18);
-}
-
-.today-list__item p {
-  margin: 0;
-  line-height: 1.65;
+.featured-topic-list .news-card {
+  border-color: rgb(215 107 63 / 0.38);
+  background:
+    linear-gradient(90deg, rgb(215 107 63 / 0.08), transparent 42%),
+    var(--surface);
+  box-shadow: 0 12px 28px rgb(19 39 34 / 0.07);
 }
 
 .place-card,

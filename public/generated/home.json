@@ -1,18 +1,79 @@
 {
-  "generated_at": "2026-06-18T09:58:51.417Z",
+  "generated_at": "2026-06-18T18:12:12.217Z",
   "health": {
     "status": "ok",
     "datasetsTotal": 8,
     "placesCount": 1317,
-    "lastSuccessAt": "2026-06-17T18:00:30.065Z",
-    "rssLastSuccessAt": "2026-06-18T09:00:20.522Z"
+    "lastSuccessAt": "2026-06-18T18:00:27.504Z",
+    "rssLastSuccessAt": "2026-06-18T18:00:26.443Z"
   },
-  "today_updates": [
-    "1,317件の施設情報を確認できます",
-    "明健中学校を追加しました",
-    "お知らせ: 郡山市市民相談センターの案内"
+  "featured_topics": [
+    {
+      "id": "rss_819ccb76a6d645a9",
+      "title": "令和8年度ゼロカーボン推進事業補助金について",
+      "link": "https://www.city.koriyama.lg.jp/soshiki/54/2443.html",
+      "category": "business",
+      "categoryLabel": "事業者",
+      "publishedAt": "2026-06-18T00:00:00.000Z",
+      "tags": [
+        "補助金",
+        "環境政策課",
+        "気候変動対策",
+        "環境・自然保護",
+        "くらし"
+      ],
+      "kind": "news"
+    },
+    {
+      "id": "rss_53d196baf5d0896b",
+      "title": "令和8年度次世代自動車導入補助金について",
+      "link": "https://www.city.koriyama.lg.jp/soshiki/54/160255.html",
+      "category": "business",
+      "categoryLabel": "事業者",
+      "publishedAt": "2026-06-18T00:00:00.000Z",
+      "tags": [
+        "補助金",
+        "環境政策課",
+        "気候変動対策",
+        "環境・自然保護",
+        "くらし"
+      ],
+      "kind": "news"
+    },
+    {
+      "id": "rss_f8f1116e55c5394b",
+      "title": "【協力店募集中！】フードシェアリングサービス「こおりやまタベスケ」",
+      "link": "https://www.city.koriyama.lg.jp/soshiki/55/85279.html",
+      "category": "life",
+      "categoryLabel": "くらし",
+      "publishedAt": "2026-06-17T23:30:00.000Z",
+      "tags": [
+        "ごみ",
+        "ごみ減量推進課",
+        "ごみの減量",
+        "ごみ・リサイクル",
+        "くらし"
+      ],
+      "kind": "news"
+    }
   ],
   "news": [
+    {
+      "id": "rss_2cce4b6b243d8a14",
+      "title": "中央公民館学習スペースの開放状況",
+      "link": "https://www.city.koriyama.lg.jp/soshiki/152/124436.html",
+      "category": "childcare",
+      "categoryLabel": "子育て",
+      "publishedAt": "2026-06-18T11:00:00.000Z",
+      "tags": [
+        "子育て",
+        "中央公民館",
+        "教育施設",
+        "教育・生涯学習",
+        "子育て・教育"
+      ],
+      "kind": "news"
+    },
     {
       "id": "rss_47d7cd46c78aab5d",
       "title": "郡山市市民相談センターの案内",
@@ -25,6 +86,23 @@
         "市民相談センター",
         "まちづくり",
         "くらし"
+      ],
+      "kind": "news"
+    },
+    {
+      "id": "rss_0b2180b4f5a58c3e",
+      "title": "【中央公民館】中央市民学校",
+      "link": "https://www.city.koriyama.lg.jp/site/manabi/56341.html",
+      "category": "childcare",
+      "categoryLabel": "子育て",
+      "publishedAt": "2026-06-18T04:00:00.000Z",
+      "tags": [
+        "子育て",
+        "学校",
+        "中央公民館",
+        "教育計画・事業",
+        "教育・生涯学習",
+        "子育て・教育"
       ],
       "kind": "news"
     },
@@ -49,7 +127,7 @@
       "title": "令和8年度ゼロカーボン推進事業補助金について",
       "link": "https://www.city.koriyama.lg.jp/soshiki/54/2443.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-18T00:00:00.000Z",
       "tags": [
         "補助金",
@@ -65,41 +143,13 @@
       "title": "令和8年度次世代自動車導入補助金について",
       "link": "https://www.city.koriyama.lg.jp/soshiki/54/160255.html",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "publishedAt": "2026-06-18T00:00:00.000Z",
       "tags": [
         "補助金",
         "環境政策課",
         "気候変動対策",
         "環境・自然保護",
-        "くらし"
-      ],
-      "kind": "news"
-    },
-    {
-      "id": "rss_d0fe02e9420b048c",
-      "title": "【審査結果公表】（受付終了）こども食堂開設体験事業業務委託に係る公募型プロポーザルの実施について",
-      "link": "https://www.city.koriyama.lg.jp/site/keiyakuportal/184308.html",
-      "category": "life",
-      "categoryLabel": "くらし",
-      "publishedAt": "2026-06-17T23:30:00.000Z",
-      "tags": [
-        "こども総務企画課"
-      ],
-      "kind": "news"
-    },
-    {
-      "id": "rss_f8f1116e55c5394b",
-      "title": "【協力店募集中！】フードシェアリングサービス「こおりやまタベスケ」",
-      "link": "https://www.city.koriyama.lg.jp/soshiki/55/85279.html",
-      "category": "life",
-      "categoryLabel": "くらし",
-      "publishedAt": "2026-06-17T23:30:00.000Z",
-      "tags": [
-        "ごみ",
-        "ごみ減量推進課",
-        "ごみの減量",
-        "ごみ・リサイクル",
         "くらし"
       ],
       "kind": "news"
@@ -118,7 +168,7 @@
       "phone": "024-925-5588",
       "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
       "firstSeenAt": "2026-05-27T03:00:45.846Z",
-      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "lastSeenAt": "2026-06-18T18:00:27.504Z",
       "attributes": {
         "raw": {
           "大分類": "保育所・保育園・幼稚園",
@@ -147,7 +197,7 @@
       "phone": "024-925-5588",
       "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
       "firstSeenAt": "2026-05-27T03:00:45.846Z",
-      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "lastSeenAt": "2026-06-18T18:00:27.504Z",
       "attributes": {
         "raw": {
           "大分類": "保育所・保育園・幼稚園",
@@ -176,7 +226,7 @@
       "phone": "024-984-5588",
       "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
       "firstSeenAt": "2026-05-27T03:00:45.846Z",
-      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "lastSeenAt": "2026-06-18T18:00:27.504Z",
       "attributes": {
         "raw": {
           "大分類": "保育所・保育園・幼稚園",
@@ -205,7 +255,7 @@
       "phone": "024-984-5588",
       "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
       "firstSeenAt": "2026-05-27T03:00:45.846Z",
-      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "lastSeenAt": "2026-06-18T18:00:27.504Z",
       "attributes": {
         "raw": {
           "大分類": "保育所・保育園・幼稚園",
@@ -234,7 +284,7 @@
       "phone": "024-946-0933",
       "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
       "firstSeenAt": "2026-05-27T03:00:45.846Z",
-      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "lastSeenAt": "2026-06-18T18:00:27.504Z",
       "attributes": {
         "raw": {
           "大分類": "保育所・保育園・幼稚園",
@@ -263,7 +313,7 @@
       "phone": "024-946-0933",
       "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
       "firstSeenAt": "2026-05-27T03:00:45.846Z",
-      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "lastSeenAt": "2026-06-18T18:00:27.504Z",
       "attributes": {
         "raw": {
           "大分類": "保育所・保育園・幼稚園",
@@ -292,7 +342,7 @@
       "phone": "024-934-5714",
       "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
       "firstSeenAt": "2026-05-27T03:00:45.846Z",
-      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "lastSeenAt": "2026-06-18T18:00:27.504Z",
       "attributes": {
         "raw": {
           "大分類": "保育所・保育園・幼稚園",
@@ -321,7 +371,7 @@
       "phone": "024-934-5714",
       "sourceUrl": "https://www.city.koriyama.lg.jp/uploaded/attachment/1719.csv",
       "firstSeenAt": "2026-05-27T03:00:45.846Z",
-      "lastSeenAt": "2026-06-17T18:00:30.065Z",
+      "lastSeenAt": "2026-06-18T18:00:27.504Z",
       "attributes": {
         "raw": {
           "大分類": "保育所・保育園・幼稚園",

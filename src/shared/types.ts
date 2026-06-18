@@ -54,7 +54,7 @@ export type HealthSummary = {
 export type HomeData = {
   generated_at: string;
   health: HealthSummary;
-  today_updates: string[];
+  featured_topics: NewsEntry[];
   news: NewsEntry[];
   places: Place[];
   category_counts: CategoryCount[];

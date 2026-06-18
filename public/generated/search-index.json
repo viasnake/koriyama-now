@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-18T09:58:51.417Z",
+  "generated_at": "2026-06-18T18:12:12.217Z",
   "items": [
     {
       "id": "place_public_facilities_6ca0399322",
@@ -11855,6 +11855,23 @@
       "keywords": "鶴見坦民井診療所 safety aed aed 鶴見坦一丁目6-10 024-927-8447"
     },
     {
+      "id": "rss_2cce4b6b243d8a14",
+      "type": "news",
+      "name": "中央公民館学習スペースの開放状況",
+      "category": "childcare",
+      "categoryLabel": "子育て",
+      "url": "https://www.city.koriyama.lg.jp/soshiki/152/124436.html",
+      "publishedAt": "2026-06-18T11:00:00.000Z",
+      "tags": [
+        "子育て",
+        "中央公民館",
+        "教育施設",
+        "教育・生涯学習",
+        "子育て・教育"
+      ],
+      "keywords": "中央公民館学習スペ-スの開放状況 childcare 子育て 子育て 中央公民館 教育施設 教育・生涯学習 子育て・教育"
+    },
+    {
       "id": "rss_47d7cd46c78aab5d",
       "type": "news",
       "name": "郡山市市民相談センターの案内",
@@ -11869,6 +11886,24 @@
         "くらし"
       ],
       "keywords": "郡山市市民相談センタ-の案内 life くらし 市民・npo活動推進課 市民相談センタ- まちづくり くらし"
+    },
+    {
+      "id": "rss_0b2180b4f5a58c3e",
+      "type": "news",
+      "name": "【中央公民館】中央市民学校",
+      "category": "childcare",
+      "categoryLabel": "子育て",
+      "url": "https://www.city.koriyama.lg.jp/site/manabi/56341.html",
+      "publishedAt": "2026-06-18T04:00:00.000Z",
+      "tags": [
+        "子育て",
+        "学校",
+        "中央公民館",
+        "教育計画・事業",
+        "教育・生涯学習",
+        "子育て・教育"
+      ],
+      "keywords": "【中央公民館】中央市民学校 childcare 子育て 子育て 学校 中央公民館 教育計画・事業 教育・生涯学習 子育て・教育"
     },
     {
       "id": "rss_5bd63dbe781a7779",
@@ -11892,7 +11927,7 @@
       "type": "news",
       "name": "令和8年度ゼロカーボン推進事業補助金について",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/soshiki/54/2443.html",
       "publishedAt": "2026-06-18T00:00:00.000Z",
       "tags": [
@@ -11902,14 +11937,14 @@
         "環境・自然保護",
         "くらし"
       ],
-      "keywords": "令和8年度ゼロカ-ボン推進事業補助金について business business 補助金 環境政策課 気候変動対策 環境・自然保護 くらし"
+      "keywords": "令和8年度ゼロカ-ボン推進事業補助金について business 事業者 補助金 環境政策課 気候変動対策 環境・自然保護 くらし"
     },
     {
       "id": "rss_53d196baf5d0896b",
       "type": "news",
       "name": "令和8年度次世代自動車導入補助金について",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/soshiki/54/160255.html",
       "publishedAt": "2026-06-18T00:00:00.000Z",
       "tags": [
@@ -11919,7 +11954,7 @@
         "環境・自然保護",
         "くらし"
       ],
-      "keywords": "令和8年度次世代自動車導入補助金について business business 補助金 環境政策課 気候変動対策 環境・自然保護 くらし"
+      "keywords": "令和8年度次世代自動車導入補助金について business 事業者 補助金 環境政策課 気候変動対策 環境・自然保護 くらし"
     },
     {
       "id": "rss_d0fe02e9420b048c",
@@ -12116,7 +12151,7 @@
       "type": "news",
       "name": "介護職員等処遇改善加算について",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/soshiki/68/2250.html",
       "publishedAt": "2026-06-16T15:00:00.000Z",
       "tags": [
@@ -12126,7 +12161,7 @@
         "介護・高齢者福祉",
         "健康・福祉"
       ],
-      "keywords": "介護職員等処遇改善加算について business business 事業者 介護保険課 介護保険事業者の方向け 介護・高齢者福祉 健康・福祉"
+      "keywords": "介護職員等処遇改善加算について business 事業者 事業者 介護保険課 介護保険事業者の方向け 介護・高齢者福祉 健康・福祉"
     },
     {
       "id": "rss_6338c3c5819064a2",
@@ -12198,7 +12233,7 @@
       "type": "news",
       "name": "郡山市中央図書館諸設備運転保守業務委託（長期継続契約）に係る制限付一般競争入札（電子入札）について",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/site/keiyakuportal/183775.html",
       "publishedAt": "2026-06-16T05:15:00.000Z",
       "tags": [
@@ -12206,14 +12241,14 @@
         "契約",
         "中央図書館"
       ],
-      "keywords": "郡山市中央図書館諸設備運転保守業務委託(長期継続契約)に係る制限付一般競争入札(電子入札)について business business 入札 契約 中央図書館"
+      "keywords": "郡山市中央図書館諸設備運転保守業務委託(長期継続契約)に係る制限付一般競争入札(電子入札)について business 事業者 入札 契約 中央図書館"
     },
     {
       "id": "rss_4f849bf98a71e8c1",
       "type": "news",
       "name": "郡山市中央図書館清掃業務委託（長期継続契約）に係る制限付一般競争入札（電子入札）について",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/site/keiyakuportal/183779.html",
       "publishedAt": "2026-06-16T05:15:00.000Z",
       "tags": [
@@ -12221,7 +12256,7 @@
         "契約",
         "中央図書館"
       ],
-      "keywords": "郡山市中央図書館清掃業務委託(長期継続契約)に係る制限付一般競争入札(電子入札)について business business 入札 契約 中央図書館"
+      "keywords": "郡山市中央図書館清掃業務委託(長期継続契約)に係る制限付一般競争入札(電子入札)について business 事業者 入札 契約 中央図書館"
     },
     {
       "id": "rss_a3ef5b4251e08670",
@@ -12374,7 +12409,7 @@
       "type": "news",
       "name": "飼い主募集の犬・猫について",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/soshiki/74/7185.html",
       "publishedAt": "2026-06-15T15:00:00.000Z",
       "tags": [
@@ -12384,7 +12419,7 @@
         "ペット・動物",
         "くらし"
       ],
-      "keywords": "飼い主募集の犬・猫について business business 募集 保健所生活衛生課 保護・譲渡・動物愛護 ペット・動物 くらし"
+      "keywords": "飼い主募集の犬・猫について business 事業者 募集 保健所生活衛生課 保護・譲渡・動物愛護 ペット・動物 くらし"
     },
     {
       "id": "rss_af022f469cdf1c22",
@@ -12482,7 +12517,7 @@
       "type": "news",
       "name": "上下水道局の入札情報",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/soshiki/204/5674.html",
       "publishedAt": "2026-06-15T07:00:00.000Z",
       "tags": [
@@ -12492,7 +12527,7 @@
         "上下水道・浄化槽・簡易水道",
         "くらし"
       ],
-      "keywords": "上下水道局の入札情報 business business 入札 上下水道局 総務課 上下水道 上下水道・浄化槽・簡易水道 くらし"
+      "keywords": "上下水道局の入札情報 business 事業者 入札 上下水道局 総務課 上下水道 上下水道・浄化槽・簡易水道 くらし"
     },
     {
       "id": "rss_c386968eb9c07d8f",
@@ -12605,7 +12640,7 @@
       "type": "news",
       "name": "会計年度任用職員の募集【上下水道局】",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/site/jougesuidou/5719.html",
       "publishedAt": "2026-06-14T15:00:00.000Z",
       "tags": [
@@ -12615,7 +12650,7 @@
         "上下水道・浄化槽・簡易水道",
         "くらし"
       ],
-      "keywords": "会計年度任用職員の募集【上下水道局】 business business 募集 上下水道局 総務課 上下水道 上下水道・浄化槽・簡易水道 くらし"
+      "keywords": "会計年度任用職員の募集【上下水道局】 business 事業者 募集 上下水道局 総務課 上下水道 上下水道・浄化槽・簡易水道 くらし"
     },
     {
       "id": "rss_9536ec94a8237a95",
@@ -12901,14 +12936,14 @@
       "type": "news",
       "name": "郡山市富久山クリーンセンター自家用電気工作物ほか修繕に係る制限付一般競争入札について",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/site/keiyakuportal/183271.html",
       "publishedAt": "2026-06-11T23:30:00.000Z",
       "tags": [
         "入札",
         "資源循環課"
       ],
-      "keywords": "郡山市富久山クリ-ンセンタ-自家用電気工作物ほか修繕に係る制限付一般競争入札について business business 入札 資源循環課"
+      "keywords": "郡山市富久山クリ-ンセンタ-自家用電気工作物ほか修繕に係る制限付一般競争入札について business 事業者 入札 資源循環課"
     },
     {
       "id": "rss_217bbf5d07b6e843",
@@ -12963,14 +12998,14 @@
       "type": "news",
       "name": "令和8年4月1日から、森林病害虫対策補助金制度が始まりました！",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/soshiki/113/171080.html",
       "publishedAt": "2026-06-11T15:00:00.000Z",
       "tags": [
         "補助金",
         "農林基盤整備課"
       ],
-      "keywords": "令和8年4月1日から、森林病害虫対策補助金制度が始まりました! business business 補助金 農林基盤整備課"
+      "keywords": "令和8年4月1日から、森林病害虫対策補助金制度が始まりました! business 事業者 補助金 農林基盤整備課"
     },
     {
       "id": "rss_83d7788c65e59c91",
@@ -13185,7 +13220,7 @@
       "type": "news",
       "name": "富久山デイ・サービスセンター「地域交流事業」受講生募集",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/soshiki/66/43358.html",
       "publishedAt": "2026-06-10T23:00:00.000Z",
       "tags": [
@@ -13195,7 +13230,7 @@
         "福祉",
         "健康・福祉"
       ],
-      "keywords": "富久山デイ・サ-ビスセンタ-「地域交流事業」受講生募集 business business 募集 健康長寿課 福祉施設 福祉 健康・福祉"
+      "keywords": "富久山デイ・サ-ビスセンタ-「地域交流事業」受講生募集 business 事業者 募集 健康長寿課 福祉施設 福祉 健康・福祉"
     },
     {
       "id": "rss_998e098aa23627fc",
@@ -13218,7 +13253,7 @@
       "type": "news",
       "name": "郡山市中小企業賃上げ支援補助金",
       "category": "business",
-      "categoryLabel": "business",
+      "categoryLabel": "事業者",
       "url": "https://www.city.koriyama.lg.jp/soshiki/119/170198.html",
       "publishedAt": "2026-06-10T15:00:00.000Z",
       "tags": [
@@ -13228,7 +13263,7 @@
         "雇用・労働・経営支援",
         "しごと・産業"
       ],
-      "keywords": "郡山市中小企業賃上げ支援補助金 business business 補助金 産業雇用政策課 企業・経営支援 雇用・労働・経営支援 しごと・産業"
+      "keywords": "郡山市中小企業賃上げ支援補助金 business 事業者 補助金 産業雇用政策課 企業・経営支援 雇用・労働・経営支援 しごと・産業"
     },
     {
       "id": "rss_0153dba6cb84ddef",
@@ -13402,36 +13437,6 @@
         "市政情報"
       ],
       "keywords": "令和8年6月の報道資料 life くらし 広聴広報課 報道発表(プレスリリ-ス) 広報・広聴 市政情報"
-    },
-    {
-      "id": "rss_61ee2e340c8336fc",
-      "type": "news",
-      "name": "郡山市休日・夜間急病センター受診者数",
-      "category": "disaster",
-      "categoryLabel": "防災",
-      "url": "https://www.city.koriyama.lg.jp/soshiki/70/164430.html",
-      "publishedAt": "2026-06-10T02:00:00.000Z",
-      "tags": [
-        "防災",
-        "保健所健康政策課",
-        "消防",
-        "防災・防犯",
-        "くらし"
-      ],
-      "keywords": "郡山市休日・夜間急病センタ-受診者数 disaster 防災 防災 保健所健康政策課 消防 防災・防犯 くらし"
-    },
-    {
-      "id": "rss_af14802cd731d634",
-      "type": "news",
-      "name": "令和学級",
-      "category": "life",
-      "categoryLabel": "くらし",
-      "url": "https://www.city.koriyama.lg.jp/soshiki/166/64660.html",
-      "publishedAt": "2026-06-10T01:30:00.000Z",
-      "tags": [
-        "緑ケ丘地域公民館"
-      ],
-      "keywords": "令和学級 life くらし 緑ケ丘地域公民館"
     },
     {
       "id": "change:2674",

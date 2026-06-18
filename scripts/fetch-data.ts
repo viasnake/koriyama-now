@@ -24,6 +24,43 @@ import {
 
 const apiBase = process.env.UPSTREAM_API_BASE ?? "https://civic-koriyama-data.alflag.org/api/v2";
 const generatedDir = join(process.cwd(), "public", "generated");
+const featuredTopicLimit = 3;
+const featuredTopicLookbackDays = 14;
+
+const featuredTopicKeywords = [
+  "補助金",
+  "助成",
+  "給付",
+  "申請",
+  "募集中",
+  "募集",
+  "意見公募",
+  "パブリックコメント",
+  "説明会",
+  "相談会",
+  "災害",
+  "防災",
+  "防犯",
+  "詐欺",
+  "熱中症",
+  "交通事故",
+  "事故防止",
+  "支援事業"
+];
+
+const routineTopicKeywords = [
+  "開放状況",
+  "受診者数",
+  "報道資料",
+  "放送のお知らせ",
+  "市民相談センターの案内",
+  "入札",
+  "議案概要",
+  "提案理由",
+  "実施しました",
+  "受付終了",
+  "終了しました"
+];
 
 type QueryValue = string | number | boolean | undefined | null;
 
@@ -45,7 +82,7 @@ async function main(): Promise<void> {
     const home: HomeData = {
       generated_at: generatedAt,
       health: healthSummary,
-      today_updates: buildTodayUpdates(changes, announcements, healthSummary.placesCount ?? places.length),
+      featured_topics: buildFeaturedTopics(announcements, generatedAt),
       news: announcements.slice(0, 6),
       places: places.slice(0, 8),
       category_counts: categoryCounts
@@ -152,21 +189,38 @@ function getData(json: unknown): unknown {
   return isRecord(json) && "data" in json ? json.data : json;
 }
 
-function buildTodayUpdates(changes: ChangeSummary[], news: NewsEntry[], placesCount: number): string[] {
-  const updates: string[] = [];
-  if (placesCount > 0) {
-    updates.push(`${placesCount.toLocaleString("ja-JP")}件の施設情報を確認できます`);
-  }
-  const latestChange = changesToNewsEntries(changes.slice(0, 1))[0];
-  if (latestChange) {
-    updates.push(latestChange.title);
-  }
-  const latestNews = news.find((entry) => entry.kind !== "change");
-  if (latestNews) {
-    updates.push(`お知らせ: ${latestNews.title}`);
+function buildFeaturedTopics(news: NewsEntry[], referenceDate: string): NewsEntry[] {
+  const referenceTimestamp = Date.parse(referenceDate);
+  const cutoff = Number.isFinite(referenceTimestamp)
+    ? referenceTimestamp - featuredTopicLookbackDays * 24 * 60 * 60 * 1000
+    : 0;
+  const seenTitles = new Set<string>();
+
+  return news
+    .filter((entry) => entry.kind !== "change")
+    .filter((entry) => {
+      const publishedTimestamp = timestamp(entry.publishedAt);
+      return publishedTimestamp !== undefined && publishedTimestamp >= cutoff;
+    })
+    .filter(isFeaturedTopic)
+    .filter((entry) => {
+      const key = normalizeTopicText(entry.title);
+      if (seenTitles.has(key)) {
+        return false;
+      }
+      seenTitles.add(key);
+      return true;
+    })
+    .slice(0, featuredTopicLimit);
+}
+
+function isFeaturedTopic(entry: NewsEntry): boolean {
+  const text = normalizeTopicText([entry.title, entry.category, entry.categoryLabel, ...entry.tags].join(" "));
+  if (routineTopicKeywords.some((keyword) => text.includes(normalizeTopicText(keyword)))) {
+    return false;
   }
 
-  return updates.slice(0, 3);
+  return featuredTopicKeywords.some((keyword) => text.includes(normalizeTopicText(keyword)));
 }
 
 function categoryCountsFromPlaces(places: Place[]): CategoryCount[] {
@@ -198,6 +252,19 @@ function withGeneratedAt<T extends object>(generatedAt: string, value: T): T & {
     generated_at: generatedAt,
     ...value
   };
+}
+
+function timestamp(value: string | undefined): number | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+function normalizeTopicText(value: string): string {
+  return value.normalize("NFKC").trim().toLowerCase();
 }
 
 async function writeGenerated(name: string, value: unknown): Promise<void> {
