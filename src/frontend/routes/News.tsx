@@ -23,19 +23,21 @@ export default function News() {
         <p>市のお知らせと施設情報の更新を、カテゴリ別に見られます。</p>
       </header>
 
-      <div className="tab-row" role="tablist" aria-label="お知らせカテゴリ">
-        {newsCategories.map((item) => (
-          <button
-            type="button"
-            role="tab"
-            aria-selected={category === item.id}
-            className={`tab${category === item.id ? " is-active" : ""}`}
-            key={item.id}
-            onClick={() => setParams(item.id === "all" ? {} : { category: item.id })}
-          >
-            {item.label}
-          </button>
-        ))}
+      <div className="news-category-scroll">
+        <div className="tab-row news-category-tabs" role="tablist" aria-label="お知らせカテゴリ">
+          {newsCategories.map((item) => (
+            <button
+              type="button"
+              role="tab"
+              aria-selected={category === item.id}
+              className={`tab${category === item.id ? " is-active" : ""}`}
+              key={item.id}
+              onClick={() => setParams(item.id === "all" ? {} : { category: item.id })}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <Section
