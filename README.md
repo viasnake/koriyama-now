@@ -5,7 +5,7 @@
 ## 構成
 
 - Frontend: Vite + React + TypeScript
-- Generated data: `public/generated/*.json`
+- Generated data: `public/generated/*.json`（ビルド時生成・コミットしない）
 - Worker API: なし
 - Runtime: Cloudflare Workers Static Assets
 - Upstream API: `https://civic-koriyama-data.alflag.org/api/v2`
