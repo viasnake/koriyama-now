@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type {
@@ -7,6 +8,7 @@ import type {
   HomeData,
   NewsEntry,
   NewsListData,
+  OfficialSite,
   Place,
   PlaceListData
 } from "../src/shared/types";
@@ -24,6 +26,7 @@ const apiBase = process.env.UPSTREAM_API_BASE ?? "https://civic-koriyama-data.al
 const generatedDir = join(process.cwd(), "public", "generated");
 const featuredTopicLimit = 3;
 const featuredTopicLookbackDays = 14;
+const siteFeedEntryLimit = 20;
 
 const featuredTopicKeywords = [
   "補助金",
@@ -62,19 +65,31 @@ const routineTopicKeywords = [
 
 type QueryValue = string | number | boolean | undefined | null;
 
+type RssFeed = {
+  id: string;
+  kind: string;
+  title: string;
+  url: string;
+};
+
+type NewsSourceData = {
+  entries: NewsEntry[];
+  officialSites: OfficialSite[];
+};
+
 async function main(): Promise<void> {
   await mkdir(generatedDir, { recursive: true });
 
   try {
     const generatedAt = new Date().toISOString();
-    const [places, news, health] = await Promise.all([
+    const [places, newsSource, health] = await Promise.all([
       fetchAllPlaces(),
       fetchNews(),
       fetchHealth()
     ]);
     const categoryCounts = health ? categoryCountsFromHealth(health.raw) : categoryCountsFromPlaces(places);
     const healthSummary = health?.summary ?? fallbackHealth(places);
-    const announcements = mergeAnnouncements(news);
+    const announcements = mergeAnnouncements(newsSource.entries);
 
     const home: HomeData = {
       generated_at: generatedAt,
@@ -93,7 +108,8 @@ async function main(): Promise<void> {
 
     const newsData: NewsListData = {
       generated_at: generatedAt,
-      entries: announcements
+      entries: announcements,
+      official_sites: newsSource.officialSites
     };
 
     const buildMeta: BuildMeta = {
@@ -136,9 +152,17 @@ async function fetchAllPlaces(): Promise<Place[]> {
   return places;
 }
 
-async function fetchNews() {
+async function fetchNews(): Promise<NewsSourceData> {
   const json = await fetchUpstream("/rss/entries", { limit: 1000, offset: 0 });
-  return normalizeNews(getData(json));
+  const entries = normalizeNews(getData(json));
+  const siteFeeds = await fetchSiteFeeds();
+  const siteNews = await fetchSiteFeedNews(siteFeeds);
+  const officialSites = buildOfficialSites(siteFeeds, siteNews);
+
+  return {
+    entries: mergeNewsEntries(entries, siteNews),
+    officialSites
+  };
 }
 
 async function fetchHealth(): Promise<{ raw: unknown; summary: HealthSummary } | undefined> {
@@ -175,6 +199,151 @@ async function fetchUpstream(path: string, query: Record<string, QueryValue> = {
   }
 
   return response.json();
+}
+
+async function fetchSiteFeeds(): Promise<RssFeed[]> {
+  try {
+    const json = await fetchUpstream("/rss/feeds", {
+      kind: "site",
+      include_disabled: true,
+      include_unverified: true
+    });
+    const data = getData(json);
+    const feeds = isRecord(data) && Array.isArray(data.feeds) ? data.feeds : [];
+
+    return feeds.map(normalizeRssFeed).filter((feed): feed is RssFeed => feed !== null);
+  } catch (error) {
+    console.warn("site RSS feed list fetch failed; generated news will use entries endpoint only", error);
+    return [];
+  }
+}
+
+async function fetchSiteFeedNews(feeds: RssFeed[]): Promise<NewsEntry[]> {
+  const results = await Promise.all(
+    feeds.map(async (feed) => {
+      try {
+        const xml = await fetchText(feed.url);
+        return parseRssXml(xml, feed);
+      } catch (error) {
+        console.warn(`site RSS fetch failed: ${feed.id}`, error);
+        return [];
+      }
+    })
+  );
+
+  return results.flat();
+}
+
+function buildOfficialSites(feeds: RssFeed[], siteNews: NewsEntry[]): OfficialSite[] {
+  const siteUrlsByFeed = new Map<string, string>();
+
+  siteNews.forEach((entry) => {
+    const siteUrl = siteRootFromUrl(entry.link);
+    const feedId = entry.feedId;
+    if (siteUrl && feedId && !siteUrlsByFeed.has(feedId)) {
+      siteUrlsByFeed.set(feedId, siteUrl);
+    }
+  });
+
+  return feeds
+    .map((feed) => {
+      const url = siteUrlsByFeed.get(feed.id);
+      if (!url) {
+        return null;
+      }
+
+      return {
+        id: `official_site_${feed.id}`,
+        title: feed.title,
+        url,
+        feedId: feed.id,
+        feedKind: feed.kind,
+        feedUrl: feed.url,
+        tags: ["公式サイト", "RSS", feed.title, feed.id]
+      };
+    })
+    .filter((site): site is OfficialSite => site !== null);
+}
+
+async function fetchText(url: string): Promise<string> {
+  const response = await fetch(url, {
+    headers: {
+      accept: "application/rss+xml, application/xml, text/xml;q=0.9, */*;q=0.1",
+      "user-agent": "civic-koriyama-static-build/0.1"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`RSS feed returned ${response.status}: ${url}`);
+  }
+
+  return response.text();
+}
+
+function parseRssXml(xml: string, feed: RssFeed): NewsEntry[] {
+  return Array.from(xml.matchAll(/<item\b[\s\S]*?<\/item>/g))
+    .slice(0, siteFeedEntryLimit)
+    .map((match) => normalizeRssItem(match[0], feed))
+    .filter((entry): entry is NewsEntry => entry !== null);
+}
+
+function normalizeRssItem(itemXml: string, feed: RssFeed): NewsEntry | null {
+  const title = textFromXml(itemXml, "title");
+  const link = textFromXml(itemXml, "link");
+  if (!title || !link) {
+    return null;
+  }
+
+  const rawPublishedAt = textFromXml(itemXml, "dc:date") ?? textFromXml(itemXml, "pubDate");
+  const publishedAt = isoDate(rawPublishedAt);
+  const sourceHash = hashHex(`${title}|${link}|${rawPublishedAt ?? ""}`);
+  const subject = textFromXml(itemXml, "dc:subject");
+  const tags = [subject, feed.title, feed.kind].filter((tag): tag is string => Boolean(tag));
+
+  return {
+    id: `rss_${sourceHash.slice(0, 16)}`,
+    title,
+    link,
+    category: "other",
+    categoryLabel: "その他",
+    feedId: feed.id,
+    feedIds: [feed.id],
+    feedKinds: [feed.kind],
+    canonicalUrl: link,
+    publishedAt,
+    fetchedAt: new Date().toISOString(),
+    sourceHash,
+    tags
+  };
+}
+
+function mergeNewsEntries(entries: NewsEntry[], supplementalEntries: NewsEntry[]): NewsEntry[] {
+  const seenIds = new Set(entries.map((entry) => entry.id));
+  const seenLinkDates = new Set(entries.map(linkDateKey));
+  const merged = [...entries];
+
+  supplementalEntries.forEach((entry) => {
+    const linkDate = linkDateKey(entry);
+    if (seenIds.has(entry.id) || seenLinkDates.has(linkDate)) {
+      return;
+    }
+
+    seenIds.add(entry.id);
+    seenLinkDates.add(linkDate);
+    merged.push(entry);
+  });
+
+  return merged;
+}
+
+function normalizeRssFeed(value: unknown): RssFeed | null {
+  const record = isRecord(value) ? value : undefined;
+  const id = toStringValue(record?.id);
+  const kind = toStringValue(record?.kind);
+  const title = toStringValue(record?.title);
+  const url = toStringValue(record?.url);
+
+  return id && kind && title && url ? { id, kind, title, url } : null;
 }
 
 function getData(json: unknown): unknown {
@@ -254,8 +423,79 @@ function timestamp(value: string | undefined): number | undefined {
   return Number.isFinite(parsed) ? parsed : undefined;
 }
 
+function isoDate(value: string | undefined): string | undefined {
+  const parsed = timestamp(value);
+  return parsed !== undefined ? new Date(parsed).toISOString() : undefined;
+}
+
+function linkDateKey(entry: NewsEntry): string {
+  return `${entry.link}\u0000${entry.publishedAt ?? ""}`;
+}
+
+function siteRootFromUrl(value: string): string | undefined {
+  try {
+    const url = new URL(value);
+    const match = url.pathname.match(/^\/site\/[^/]+\//);
+    if (!match) {
+      return undefined;
+    }
+
+    return `${url.origin}${match[0]}`;
+  } catch {
+    return undefined;
+  }
+}
+
 function normalizeTopicText(value: string): string {
   return value.normalize("NFKC").trim().toLowerCase();
+}
+
+function textFromXml(xml: string, tagName: string): string | undefined {
+  const escapedTagName = tagName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = xml.match(new RegExp(`<${escapedTagName}[^>]*>([\\s\\S]*?)<\\/${escapedTagName}>`, "i"));
+  return match ? decodeXmlText(match[1]) : undefined;
+}
+
+function decodeXmlText(value: string): string | undefined {
+  const text = value
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&(#x[0-9a-f]+|#\d+|amp|lt|gt|quot|apos);/gi, (_, entity: string) => {
+      const normalized = entity.toLowerCase();
+      if (normalized === "amp") {
+        return "&";
+      }
+      if (normalized === "lt") {
+        return "<";
+      }
+      if (normalized === "gt") {
+        return ">";
+      }
+      if (normalized === "quot") {
+        return "\"";
+      }
+      if (normalized === "apos") {
+        return "'";
+      }
+      if (normalized.startsWith("#x")) {
+        return String.fromCodePoint(Number.parseInt(normalized.slice(2), 16));
+      }
+      if (normalized.startsWith("#")) {
+        return String.fromCodePoint(Number.parseInt(normalized.slice(1), 10));
+      }
+      return _;
+    })
+    .trim();
+
+  return text || undefined;
+}
+
+function hashHex(value: string): string {
+  return createHash("sha256").update(value).digest("hex");
+}
+
+function toStringValue(value: unknown): string | undefined {
+  return typeof value === "string" && value.trim() ? value : undefined;
 }
 
 async function writeGenerated(name: string, value: unknown): Promise<void> {
