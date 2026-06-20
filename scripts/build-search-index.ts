@@ -1,6 +1,13 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { NewsEntry, NewsListData, PlaceListData, SearchIndexData, SearchIndexItem } from "../src/shared/types";
+import type {
+  NewsEntry,
+  NewsListData,
+  OfficialSite,
+  PlaceListData,
+  SearchIndexData,
+  SearchIndexItem
+} from "../src/shared/types";
 
 const generatedDir = join(process.cwd(), "public", "generated");
 
@@ -11,7 +18,8 @@ async function main(): Promise<void> {
     generated_at: placesData.generated_at,
     items: [
       ...placesData.places.map(toPlaceSearchItem),
-      ...newsData.entries.map(toNewsSearchItem)
+      ...newsData.entries.map(toNewsSearchItem),
+      ...(newsData.official_sites ?? []).map(toOfficialSiteSearchItem)
     ]
   };
 
@@ -73,6 +81,30 @@ function toNewsSearchItem(entry: NewsEntry): SearchIndexItem {
     url: entry.link,
     publishedAt: entry.publishedAt,
     tags: entry.tags,
+    keywords: normalizeSearchText(keywords)
+  };
+}
+
+function toOfficialSiteSearchItem(site: OfficialSite): SearchIndexItem {
+  const keywords = [
+    site.title,
+    site.url,
+    site.feedId,
+    site.feedKind,
+    site.feedUrl,
+    ...site.tags
+  ]
+    .filter((value): value is string => Boolean(value))
+    .join(" ");
+
+  return {
+    id: site.id,
+    type: "news",
+    name: site.title,
+    category: "official_site",
+    categoryLabel: "公式サイト",
+    url: site.url,
+    tags: site.tags,
     keywords: normalizeSearchText(keywords)
   };
 }

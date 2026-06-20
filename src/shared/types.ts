@@ -31,6 +31,16 @@ export type NewsEntry = {
   tags: string[];
 };
 
+export type OfficialSite = {
+  id: string;
+  title: string;
+  url: string;
+  feedId?: string;
+  feedKind?: string;
+  feedUrl?: string;
+  tags: string[];
+};
+
 export type CategoryCount = {
   id: string;
   label: string;
@@ -64,6 +74,7 @@ export type PlaceListData = {
 export type NewsListData = {
   generated_at: string;
   entries: NewsEntry[];
+  official_sites?: OfficialSite[];
 };
 
 export type SearchIndexItem = {
