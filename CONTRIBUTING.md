@@ -35,7 +35,7 @@ src/frontend/      React アプリ
 src/shared/        生成スクリプトとフロントで共有する型、正規化処理
 src/worker/        Cloudflare Workers Static Assets 用の最小 Worker
 scripts/           生成データ作成・検証スクリプト
-public/generated/  ビルド時に生成される JSON
+public/generated/  ビルド時に生成される JSON（コミットしない）
 ```
 
 ## 生成データ
@@ -51,9 +51,11 @@ public/generated/search-index.json
 public/generated/build-meta.json
 ```
 
+これらの generated ファイルはビルド時に作り直すため、Git には含めません。
+
 `changes.json` は作りません。施設情報の更新は、利用者向けには `news.json` の「施設の更新」カテゴリに入れます。
 
-外部 API が失敗しても、既存の generated データがあればそれを残します。このとき `build-meta.json` は `status: "stale"` になります。
+外部 API が失敗しても、ローカルに既存の generated データがあればそれを残します。このとき `build-meta.json` は `status: "stale"` になります。fresh checkout の CI では generated データがないため、API 取得に失敗するとビルドは失敗します。
 
 ## 検索
 

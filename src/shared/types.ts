@@ -21,7 +21,13 @@ export type NewsEntry = {
   link: string;
   category: string;
   categoryLabel: string;
+  feedId?: string;
+  feedIds?: string[];
+  feedKinds?: string[];
+  canonicalUrl?: string;
   publishedAt?: string;
+  fetchedAt?: string;
+  sourceHash?: string;
   tags: string[];
 };
 
@@ -37,6 +43,7 @@ export type HealthSummary = {
   placesCount?: number;
   lastSuccessAt?: string;
   rssLastSuccessAt?: string;
+  rssEntriesCount?: number;
 };
 
 export type HomeData = {

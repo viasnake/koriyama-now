@@ -56,6 +56,9 @@ function toNewsSearchItem(entry: NewsEntry): SearchIndexItem {
     entry.title,
     entry.category,
     entry.categoryLabel,
+    entry.feedId,
+    ...(entry.feedIds ?? []),
+    ...(entry.feedKinds ?? []),
     ...entry.tags
   ]
     .filter((value): value is string => Boolean(value))
