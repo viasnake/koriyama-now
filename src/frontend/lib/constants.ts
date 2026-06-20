@@ -41,5 +41,6 @@ export const newsCategories = [
   { id: "childcare", label: "子育て" },
   { id: "city_admin", label: "施設・行政" },
   { id: "business", label: "事業者" },
-  { id: "disaster", label: "防災" }
+  { id: "disaster", label: "防災" },
+  { id: "other", label: "その他" }
 ] as const;

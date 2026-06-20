@@ -18,6 +18,7 @@ const categoryLabels: Record<string, string> = {
   facility: "公共施設",
   life: "くらし",
   medical: "医療",
+  other: "その他",
   public_facilities: "公共施設",
   public_toilets: "トイレ",
   public_wifi: "Wi-Fi",
@@ -108,10 +109,10 @@ export function normalizeNewsEntry(value: unknown): NewsEntry | null {
     return null;
   }
 
-  const category = toStringValue(record.category) ?? "life";
-  const tags = Array.isArray(record.tags)
-    ? record.tags.map(toStringValue).filter((tag): tag is string => Boolean(tag))
-    : [];
+  const category = toStringValue(record.category) ?? "other";
+  const feedId = toStringValue(record.feed_id);
+  const feedIds = toStringArray(record.feed_ids);
+  const feedKinds = toStringArray(record.feed_kinds);
 
   return {
     id,
@@ -119,8 +120,14 @@ export function normalizeNewsEntry(value: unknown): NewsEntry | null {
     link,
     category,
     categoryLabel: categoryLabel(category),
+    feedId,
+    feedIds: feedIds.length > 0 ? feedIds : feedId ? [feedId] : undefined,
+    feedKinds: feedKinds.length > 0 ? feedKinds : undefined,
+    canonicalUrl: toStringValue(record.canonical_url),
     publishedAt: toStringValue(record.published_at),
-    tags
+    fetchedAt: toStringValue(record.fetched_at),
+    sourceHash: toStringValue(record.source_hash),
+    tags: toStringArray(record.tags)
   };
 }
 
@@ -161,14 +168,19 @@ export function normalizeHealth(value: unknown): HealthSummary {
   const record = asRecord(value);
   const datasets = asRecord(record?.datasets);
   const rss = asRecord(record?.rss);
-  const failed = Array.isArray(datasets?.failed) ? datasets.failed.length : 0;
+  const datasetFailed = Array.isArray(datasets?.failed) ? datasets.failed.length : 0;
+  const rssFailed = Array.isArray(rss?.failed) ? rss.failed.length : 0;
+  const rawStatus = toStringValue(record?.status);
+  const upstreamStatus = rawStatus === "ok" || rawStatus === "degraded" ? rawStatus : undefined;
+  const hasFailures = datasetFailed > 0 || rssFailed > 0;
 
   return {
-    status: failed > 0 ? "degraded" : "ok",
+    status: upstreamStatus ?? (hasFailures ? "degraded" : "ok"),
     datasetsTotal: toNumberValue(datasets?.total),
     placesCount: toNumberValue(datasets?.places_count),
     lastSuccessAt: toStringValue(datasets?.last_success_at),
-    rssLastSuccessAt: toStringValue(rss?.last_success_at)
+    rssLastSuccessAt: toStringValue(rss?.last_success_at),
+    rssEntriesCount: toNumberValue(rss?.entries_count)
   };
 }
 
@@ -261,6 +273,12 @@ function toStringValue(value: unknown): string | undefined {
   }
 
   return undefined;
+}
+
+function toStringArray(value: unknown): string[] {
+  return Array.isArray(value)
+    ? value.map(toStringValue).filter((item): item is string => Boolean(item))
+    : [];
 }
 
 function toNumberValue(value: unknown): number | undefined {

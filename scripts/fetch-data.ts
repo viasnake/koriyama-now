@@ -137,7 +137,7 @@ async function fetchAllPlaces(): Promise<Place[]> {
 }
 
 async function fetchNews() {
-  const json = await fetchUpstream("/rss/entries", { limit: 100, offset: 0 });
+  const json = await fetchUpstream("/rss/entries", { limit: 1000, offset: 0 });
   return normalizeNews(getData(json));
 }
 
