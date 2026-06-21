@@ -4,7 +4,7 @@ import { ExternalLink, MapPin, Phone } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import type { PlaceListData } from "../../shared/types";
 import { CardSkeleton, Section, SectionError } from "../components/Section";
-import { formatDateOnly, googleMapsUrl } from "../lib/format";
+import { googleMapsUrl } from "../lib/format";
 import { generatedFiles, getGeneratedJson } from "../lib/staticDataClient";
 
 const PlaceMap = lazy(() => import("../components/PlaceMap"));
@@ -74,7 +74,6 @@ export default function Place() {
               </a>
             ) : null}
           </div>
-          {place.lastSeenAt ? <p className="card-meta">データ取得日 {formatDateOnly(place.lastSeenAt)}</p> : null}
         </Section>
       ) : null}
 
