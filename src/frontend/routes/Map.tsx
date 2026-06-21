@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { List, Map as MapIcon, MapPin, Phone } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MapPin, Phone } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import type { FeatureCollection, Place, PlaceListData } from "../../shared/types";
 import MapCanvas from "../components/MapCanvas";
@@ -10,15 +10,14 @@ import { placeCategories, placeCategoryAliases } from "../lib/constants";
 import { generatedFiles, getGeneratedJson } from "../lib/staticDataClient";
 
 const mapListPageSize = 60;
-type MapViewMode = "map" | "list";
 
 export default function MapPage() {
   const [params, setParams] = useSearchParams();
   const initialCategory = categoryFromQuery(params.get("q") ?? params.get("category") ?? "");
   const [category, setCategory] = useState(initialCategory);
   const [selectedId, setSelectedId] = useState<string | undefined>();
-  const [viewMode, setViewMode] = useState<MapViewMode>("map");
   const [visibleListCount, setVisibleListCount] = useState(mapListPageSize);
+  const mapStageRef = useRef<HTMLDivElement | null>(null);
 
   const geoQuery = useQuery({
     queryKey: ["places.geojson"],
@@ -72,7 +71,12 @@ export default function MapPage() {
 
   const handleListSelect = useCallback((id: string) => {
     setSelectedId(id);
-    setViewMode("map");
+    window.setTimeout(() => {
+      mapStageRef.current?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start"
+      });
+    }, 0);
   }, []);
 
   const handleCategorySelect = useCallback((nextCategory: string) => {
@@ -92,27 +96,6 @@ export default function MapPage() {
         <p>{filteredCount.toLocaleString("ja-JP")}件を表示しています。</p>
       </header>
 
-      <div className="map-view-toggle" role="group" aria-label="表示方法">
-        <button
-          type="button"
-          className={`tab${viewMode === "map" ? " is-active" : ""}`}
-          aria-pressed={viewMode === "map"}
-          onClick={() => setViewMode("map")}
-        >
-          <MapIcon aria-hidden="true" size={17} />
-          地図
-        </button>
-        <button
-          type="button"
-          className={`tab${viewMode === "list" ? " is-active" : ""}`}
-          aria-pressed={viewMode === "list"}
-          onClick={() => setViewMode("list")}
-        >
-          <List aria-hidden="true" size={17} />
-          一覧
-        </button>
-      </div>
-
       <div className="tab-row tab-row--sticky" role="group" aria-label="施設カテゴリ">
         {placeCategories.map((item) => (
           <button
@@ -130,9 +113,9 @@ export default function MapPage() {
       {geoQuery.isLoading ? <CardSkeleton /> : null}
       {geoQuery.isError ? <SectionError message="地図データを取得できませんでした。" /> : null}
       {geoQuery.data ? (
-        <div className={`map-layout map-layout--${viewMode}`}>
+        <div className="map-layout">
           <div className="map-layout__map">
-            <div className="map-stage">
+            <div className="map-stage" ref={mapStageRef}>
               <MapCanvas
                 collection={geoQuery.data}
                 category={category}

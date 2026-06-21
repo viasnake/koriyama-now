@@ -622,18 +622,6 @@ pre {
   gap: 8px;
 }
 
-.map-view-toggle {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.map-view-toggle .tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-}
-
 .news-date-group {
   display: grid;
   gap: 10px;
@@ -859,16 +847,12 @@ pre {
 
 .map-stage {
   position: relative;
+  scroll-margin-top: 74px;
 }
 
 .map-layout {
   display: grid;
   gap: 14px;
-}
-
-.map-layout--list .map-layout__map,
-.map-layout--map .map-list-panel {
-  display: none;
 }
 
 .map-stage__notice {
@@ -1449,28 +1433,13 @@ pre {
   }
 
   .page--map .compact-head,
-  .page--map .tab-row--sticky,
-  .page--map .map-view-toggle {
+  .page--map .tab-row--sticky {
     max-width: 1120px;
   }
 
-  .map-view-toggle {
-    display: none;
-  }
-
-  .map-layout,
-  .map-layout--map,
-  .map-layout--list {
+  .map-layout {
     grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
     align-items: start;
-  }
-
-  .map-layout--list .map-layout__map {
-    display: block;
-  }
-
-  .map-layout--map .map-list-panel {
-    display: grid;
   }
 
   .map-list-panel {

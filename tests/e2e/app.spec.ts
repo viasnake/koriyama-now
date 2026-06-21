@@ -80,18 +80,20 @@ test("free text search can be limited to news", async ({ page }) => {
   await expect(page.locator(".place-card")).toHaveCount(0);
 });
 
-test("map list view exposes places and can select a detail", async ({ page }) => {
+test("map list selects a place on the same page", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/map?category=aed");
 
   await expect(page.getByText("2件を表示しています。")).toBeVisible();
-  await page.getByRole("button", { name: "一覧" }).click();
+  await expect(page.getByRole("group", { name: "表示方法" })).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "施設一覧" })).toBeVisible();
   await expect(page.locator(".map-place-select")).toHaveCount(2);
 
   await page.locator(".map-place-select").first().click();
   await expect(page.getByRole("button", { name: "閉じる" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "郡山駅前AED" })).toBeVisible();
+  await expect(page.locator(".map-canvas")).toBeInViewport();
+  await expect(page.locator(".map-pin.is-selected")).toBeVisible();
 });
 
 async function routeGeneratedData(page: Page): Promise<void> {

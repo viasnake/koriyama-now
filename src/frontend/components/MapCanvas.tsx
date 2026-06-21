@@ -120,6 +120,24 @@ export default function MapCanvas({ collection, category, selectedId, onSelect }
     });
   }, [features, selectedId]);
 
+  useEffect(() => {
+    const cluster = clusterRef.current;
+    const map = mapRef.current;
+    if (!selectedId || !cluster || !map) {
+      return;
+    }
+
+    const entry = markerByIdRef.current.get(selectedId);
+    if (!entry) {
+      return;
+    }
+
+    cluster.zoomToShowLayer(entry.marker, () => {
+      const target = entry.marker.getLatLng();
+      map.setView(target, Math.max(map.getZoom(), 16), { animate: false });
+    });
+  }, [selectedId]);
+
   return <div ref={containerRef} className="map-canvas" aria-label="施設マップ" />;
 }
 
