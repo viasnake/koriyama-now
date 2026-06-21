@@ -73,14 +73,15 @@ export function PlaceDetailSheet({ place, isLoading = false, errorMessage, onClo
 }
 
 function SheetTop({ onClose }: { onClose?: () => void }) {
+  if (!onClose) {
+    return null;
+  }
+
   return (
     <div className="detail-sheet__top">
-      <div className="sheet-handle" />
-      {onClose ? (
-        <button type="button" className="sheet-close" onClick={onClose} aria-label="閉じる">
-          <X aria-hidden="true" size={18} />
-        </button>
-      ) : null}
+      <button type="button" className="sheet-close" onClick={onClose} aria-label="閉じる">
+        <X aria-hidden="true" size={18} />
+      </button>
     </div>
   );
 }

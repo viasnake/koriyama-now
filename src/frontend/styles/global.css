@@ -1069,7 +1069,7 @@ pre {
 
 .detail-sheet {
   display: grid;
-  gap: 10px;
+  gap: 9px;
   min-height: 96px;
   padding: 14px;
   border: 1px solid var(--line);
@@ -1082,7 +1082,7 @@ pre {
 .map-detail-popover {
   position: absolute;
   right: 10px;
-  bottom: 10px;
+  bottom: 36px;
   left: 10px;
   z-index: 500;
   pointer-events: none;
@@ -1098,15 +1098,8 @@ pre {
 .detail-sheet__top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  min-height: 30px;
-}
-
-.sheet-handle {
-  width: 34px;
-  height: 3px;
-  border-radius: 99px;
-  background: #c7d3cd;
+  justify-content: flex-end;
+  min-height: 34px;
 }
 
 .sheet-close {
@@ -1259,15 +1252,15 @@ pre {
   }
 
   .map-detail-popover {
-    top: 14px;
+    top: 84px;
     right: 14px;
     bottom: auto;
     left: auto;
-    width: min(370px, 42%);
+    width: min(340px, calc(100% - 28px));
   }
 
   .map-detail-popover .detail-sheet {
-    max-height: min(68dvh, 560px);
+    max-height: min(52dvh, 500px);
   }
 
   .bottom-nav {
