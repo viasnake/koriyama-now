@@ -21,6 +21,7 @@ export default function About() {
         </p>
         <a className="primary-link" href="https://www.city.koriyama.lg.jp/" target="_blank" rel="noreferrer">
           郡山市公式サイト
+          <span className="sr-only">（新しいタブで開きます）</span>
           <ExternalLink aria-hidden="true" size={16} />
         </a>
       </Section>

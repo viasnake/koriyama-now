@@ -55,9 +55,14 @@ export default function MapCanvas({ collection, category, selectedId, onSelect }
     mapRef.current = map;
     clusterRef.current = cluster;
 
-    window.setTimeout(() => map.invalidateSize(), 80);
+    const invalidateTimer = window.setTimeout(() => {
+      if (mapRef.current === map) {
+        map.invalidateSize();
+      }
+    }, 80);
 
     return () => {
+      window.clearTimeout(invalidateTimer);
       map.remove();
       mapRef.current = null;
       clusterRef.current = null;
@@ -183,7 +188,7 @@ function markerCategory(feature: PointFeature): string {
 }
 
 function categoryCandidates(feature: PointFeature): string[] {
-  const values = [feature.properties.category, feature.properties.dataset_id].filter(
+  const values = [feature.properties.category, feature.properties.dataset_id, ...(feature.properties.categories ?? [])].filter(
     (value): value is string => Boolean(value)
   );
   const candidates = new Set(values);

@@ -1,18 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { List, Map as MapIcon } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
-import type { FeatureCollection, PlaceListData } from "../../shared/types";
+import type { FeatureCollection, Place, PlaceListData } from "../../shared/types";
 import MapCanvas from "../components/MapCanvas";
 import { PlaceDetailSheet } from "../components/PlaceDetailSheet";
+import { PlaceCard } from "../components/PlaceCard";
 import { CardSkeleton, SectionError } from "../components/Section";
 import { placeCategories, placeCategoryAliases } from "../lib/constants";
 import { generatedFiles, getGeneratedJson } from "../lib/staticDataClient";
 
+const mapListPageSize = 60;
+type MapViewMode = "map" | "list";
+
 export default function MapPage() {
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const initialCategory = categoryFromQuery(params.get("q") ?? params.get("category") ?? "");
   const [category, setCategory] = useState(initialCategory);
   const [selectedId, setSelectedId] = useState<string | undefined>();
+  const [viewMode, setViewMode] = useState<MapViewMode>("map");
+  const [visibleListCount, setVisibleListCount] = useState(mapListPageSize);
 
   const geoQuery = useQuery({
     queryKey: ["places.geojson"],
@@ -22,7 +29,7 @@ export default function MapPage() {
   const placesQuery = useQuery({
     queryKey: ["places"],
     queryFn: () => getGeneratedJson<PlaceListData>(generatedFiles.places),
-    enabled: Boolean(selectedId)
+    enabled: Boolean(geoQuery.data) || Boolean(selectedId)
   });
 
   const selectedPlace = useMemo(() => {
@@ -45,14 +52,35 @@ export default function MapPage() {
     return geoQuery.data.features.filter((feature) => featureMatchesCategory(feature, category)).length;
   }, [category, geoQuery.data]);
 
+  const filteredPlaces = useMemo(() => {
+    const places = placesQuery.data?.places ?? [];
+    if (category === "all") {
+      return places;
+    }
+
+    return places.filter((place) => placeMatchesCategory(place, category));
+  }, [category, placesQuery.data]);
+
+  const visiblePlaces = filteredPlaces.slice(0, visibleListCount);
+
+  useEffect(() => {
+    setVisibleListCount(mapListPageSize);
+  }, [category]);
+
   const handleSelect = useCallback((id: string) => {
     setSelectedId(id);
+  }, []);
+
+  const handleListSelect = useCallback((id: string) => {
+    setSelectedId(id);
+    setViewMode("map");
   }, []);
 
   const handleCategorySelect = useCallback((nextCategory: string) => {
     setCategory(nextCategory);
     setSelectedId(undefined);
-  }, []);
+    setParams(nextCategory === "all" ? {} : { category: nextCategory });
+  }, [setParams]);
 
   const handleCloseDetail = useCallback(() => {
     setSelectedId(undefined);
@@ -65,12 +93,32 @@ export default function MapPage() {
         <p>{filteredCount.toLocaleString("ja-JP")}件を表示しています。</p>
       </header>
 
-      <div className="tab-row tab-row--sticky" role="tablist" aria-label="施設カテゴリ">
+      <div className="map-view-toggle" role="group" aria-label="表示方法">
+        <button
+          type="button"
+          className={`tab${viewMode === "map" ? " is-active" : ""}`}
+          aria-pressed={viewMode === "map"}
+          onClick={() => setViewMode("map")}
+        >
+          <MapIcon aria-hidden="true" size={17} />
+          地図
+        </button>
+        <button
+          type="button"
+          className={`tab${viewMode === "list" ? " is-active" : ""}`}
+          aria-pressed={viewMode === "list"}
+          onClick={() => setViewMode("list")}
+        >
+          <List aria-hidden="true" size={17} />
+          一覧
+        </button>
+      </div>
+
+      <div className="tab-row tab-row--sticky" role="group" aria-label="施設カテゴリ">
         {placeCategories.map((item) => (
           <button
             type="button"
-            role="tab"
-            aria-selected={category === item.id}
+            aria-pressed={category === item.id}
             className={`tab${category === item.id ? " is-active" : ""}`}
             key={item.id}
             onClick={() => handleCategorySelect(item.id)}
@@ -83,24 +131,59 @@ export default function MapPage() {
       {geoQuery.isLoading ? <CardSkeleton /> : null}
       {geoQuery.isError ? <SectionError message="地図データを取得できませんでした。" /> : null}
       {geoQuery.data ? (
-        <div className="map-stage">
-          <MapCanvas
-            collection={geoQuery.data}
-            category={category}
-            selectedId={selectedId}
-            onSelect={handleSelect}
-          />
-          <p className="map-stage__notice">地図の位置は目安です。訪問前に公式情報を確認してください。</p>
-          {selectedId ? (
-            <div className="map-detail-popover">
-              <PlaceDetailSheet
-                place={selectedPlace}
-                isLoading={placesQuery.isLoading}
-                errorMessage={placesQuery.isError ? "地点の詳細を取得できませんでした。" : undefined}
-                onClose={handleCloseDetail}
+        <div className={`map-layout map-layout--${viewMode}`}>
+          <div className="map-layout__map">
+            <div className="map-stage">
+              <MapCanvas
+                collection={geoQuery.data}
+                category={category}
+                selectedId={selectedId}
+                onSelect={handleSelect}
               />
+              <p className="map-stage__notice">地図の位置は目安です。訪問前に公式情報を確認してください。</p>
+              {selectedId ? (
+                <div className="map-detail-popover">
+                  <PlaceDetailSheet
+                    place={selectedPlace}
+                    isLoading={placesQuery.isLoading}
+                    errorMessage={placesQuery.isError ? "地点の詳細を取得できませんでした。" : undefined}
+                    onClose={handleCloseDetail}
+                  />
+                </div>
+              ) : null}
             </div>
-          ) : null}
+          </div>
+
+          <aside className="map-list-panel" aria-label="施設一覧">
+            <div className="map-list-panel__head">
+              <h2>施設一覧</h2>
+              <p>{filteredPlaces.length.toLocaleString("ja-JP")}件</p>
+            </div>
+            {placesQuery.isLoading ? <CardSkeleton /> : null}
+            {placesQuery.isError ? <SectionError message="施設一覧を取得できませんでした。" /> : null}
+            <div className="map-place-list">
+              {visiblePlaces.map((place) => (
+                <div
+                  className={`map-place-list__item${selectedId === place.id ? " is-selected" : ""}`}
+                  key={place.id}
+                >
+                  <PlaceCard place={place} showMapLink={false} />
+                  <button type="button" className="text-link" onClick={() => handleListSelect(place.id)}>
+                    地図で選択
+                  </button>
+                </div>
+              ))}
+            </div>
+            {visibleListCount < filteredPlaces.length ? (
+              <button
+                type="button"
+                className="load-more-button"
+                onClick={() => setVisibleListCount((count) => count + mapListPageSize)}
+              >
+                さらに表示
+              </button>
+            ) : null}
+          </aside>
         </div>
       ) : null}
     </div>
@@ -118,10 +201,24 @@ function categoryFromQuery(value: string): string {
 }
 
 function featureMatchesCategory(feature: FeatureCollection["features"][number], category: string): boolean {
-  const values = [feature.properties.category, feature.properties.dataset_id].filter(
+  const values = [
+    feature.properties.category,
+    feature.properties.dataset_id,
+    ...(feature.properties.categories ?? [])
+  ].filter((value): value is string => Boolean(value));
+
+  return valuesMatchCategory(values, category);
+}
+
+function placeMatchesCategory(place: Place, category: string): boolean {
+  const values = [place.category, place.subcategory, ...(place.categories ?? [])].filter(
     (value): value is string => Boolean(value)
   );
 
+  return valuesMatchCategory(values, category);
+}
+
+function valuesMatchCategory(values: string[], category: string): boolean {
   if (category === "aed") {
     return values.includes("aed") || values.includes("safety");
   }
