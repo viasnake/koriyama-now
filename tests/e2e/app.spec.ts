@@ -87,9 +87,9 @@ test("map list view exposes places and can select a detail", async ({ page }) =>
   await expect(page.getByText("2件を表示しています。")).toBeVisible();
   await page.getByRole("button", { name: "一覧" }).click();
   await expect(page.getByRole("heading", { name: "施設一覧" })).toBeVisible();
-  await expect(page.locator(".map-place-list__item")).toHaveCount(2);
+  await expect(page.locator(".map-place-select")).toHaveCount(2);
 
-  await page.getByRole("button", { name: "地図で選択" }).first().click();
+  await page.locator(".map-place-select").first().click();
   await expect(page.getByRole("button", { name: "閉じる" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "郡山駅前AED" })).toBeVisible();
 });

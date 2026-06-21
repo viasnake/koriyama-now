@@ -1,18 +1,27 @@
 import { ExternalLink, MapPin, Phone, X } from "lucide-react";
 import type { Place } from "../../shared/types";
-import { formatDateOnly, googleMapsUrl } from "../lib/format";
+import { googleMapsUrl } from "../lib/format";
 
 type PlaceDetailSheetProps = {
   place?: Place;
   isLoading?: boolean;
   errorMessage?: string;
   onClose?: () => void;
+  variant?: "default" | "compact";
 };
 
-export function PlaceDetailSheet({ place, isLoading = false, errorMessage, onClose }: PlaceDetailSheetProps) {
+export function PlaceDetailSheet({
+  place,
+  isLoading = false,
+  errorMessage,
+  onClose,
+  variant = "default"
+}: PlaceDetailSheetProps) {
+  const sheetClassName = `detail-sheet${variant === "compact" ? " detail-sheet--compact" : ""}`;
+
   if (isLoading) {
     return (
-      <aside className="detail-sheet" aria-live="polite">
+      <aside className={sheetClassName} aria-live="polite">
         <SheetTop onClose={onClose} />
         <p className="card-muted">詳細を読み込んでいます。</p>
       </aside>
@@ -21,7 +30,7 @@ export function PlaceDetailSheet({ place, isLoading = false, errorMessage, onClo
 
   if (errorMessage) {
     return (
-      <aside className="detail-sheet" aria-live="polite">
+      <aside className={sheetClassName} aria-live="polite">
         <SheetTop onClose={onClose} />
         <p className="card-muted">{errorMessage}</p>
       </aside>
@@ -34,8 +43,39 @@ export function PlaceDetailSheet({ place, isLoading = false, errorMessage, onClo
 
   const mapsUrl = googleMapsUrl(place);
 
+  if (variant === "compact") {
+    return (
+      <aside className={sheetClassName}>
+        <SheetTop onClose={onClose} />
+        <div className="card-kicker">{place.categoryLabel}</div>
+        <h2>{place.name}</h2>
+        {place.address ? (
+          <p className="card-line">
+            <MapPin aria-hidden="true" size={16} />
+            {place.address}
+          </p>
+        ) : null}
+        <div className="sheet-actions">
+          {place.phone ? (
+            <a href={`tel:${place.phone}`} className="text-link">
+              <Phone aria-hidden="true" size={15} />
+              {place.phone}
+            </a>
+          ) : null}
+          {mapsUrl ? (
+            <a href={mapsUrl} target="_blank" rel="noreferrer" className="text-link">
+              Google Maps
+              <span className="sr-only">（新しいタブで開きます）</span>
+              <ExternalLink aria-hidden="true" size={14} />
+            </a>
+          ) : null}
+        </div>
+      </aside>
+    );
+  }
+
   return (
-    <aside className="detail-sheet">
+    <aside className={sheetClassName}>
       <SheetTop onClose={onClose} />
       <div className="card-kicker">{place.categoryLabel}</div>
       <h2>{place.name}</h2>
@@ -67,7 +107,6 @@ export function PlaceDetailSheet({ place, isLoading = false, errorMessage, onClo
           </a>
         ) : null}
       </div>
-      {place.lastSeenAt ? <p className="card-meta">データ取得日 {formatDateOnly(place.lastSeenAt)}</p> : null}
     </aside>
   );
 }

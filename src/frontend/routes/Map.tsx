@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { List, Map as MapIcon } from "lucide-react";
+import { List, Map as MapIcon, MapPin, Phone } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import type { FeatureCollection, Place, PlaceListData } from "../../shared/types";
 import MapCanvas from "../components/MapCanvas";
 import { PlaceDetailSheet } from "../components/PlaceDetailSheet";
-import { PlaceCard } from "../components/PlaceCard";
 import { CardSkeleton, SectionError } from "../components/Section";
 import { placeCategories, placeCategoryAliases } from "../lib/constants";
 import { generatedFiles, getGeneratedJson } from "../lib/staticDataClient";
@@ -148,6 +147,7 @@ export default function MapPage() {
                     isLoading={placesQuery.isLoading}
                     errorMessage={placesQuery.isError ? "地点の詳細を取得できませんでした。" : undefined}
                     onClose={handleCloseDetail}
+                    variant="compact"
                   />
                 </div>
               ) : null}
@@ -163,15 +163,29 @@ export default function MapPage() {
             {placesQuery.isError ? <SectionError message="施設一覧を取得できませんでした。" /> : null}
             <div className="map-place-list">
               {visiblePlaces.map((place) => (
-                <div
-                  className={`map-place-list__item${selectedId === place.id ? " is-selected" : ""}`}
+                <button
+                  type="button"
+                  className={`map-place-select${selectedId === place.id ? " is-selected" : ""}`}
                   key={place.id}
+                  aria-pressed={selectedId === place.id}
+                  aria-label={`${place.name}を地図上で選択`}
+                  onClick={() => handleListSelect(place.id)}
                 >
-                  <PlaceCard place={place} showMapLink={false} />
-                  <button type="button" className="text-link" onClick={() => handleListSelect(place.id)}>
-                    地図で選択
-                  </button>
-                </div>
+                  <span className="card-kicker">{place.categoryLabel}</span>
+                  <span className="map-place-select__name">{place.name}</span>
+                  {place.address ? (
+                    <span className="card-line">
+                      <MapPin aria-hidden="true" size={16} />
+                      {place.address}
+                    </span>
+                  ) : null}
+                  {place.phone ? (
+                    <span className="card-line">
+                      <Phone aria-hidden="true" size={16} />
+                      {place.phone}
+                    </span>
+                  ) : null}
+                </button>
               ))}
             </div>
             {visibleListCount < filteredPlaces.length ? (

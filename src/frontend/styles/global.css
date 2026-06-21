@@ -933,22 +933,28 @@ pre {
   gap: 10px;
 }
 
-.map-place-list__item {
+.map-place-select {
   display: grid;
-  gap: 6px;
+  gap: 7px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: inherit;
+  text-align: left;
 }
 
-.map-place-list__item > .text-link {
-  justify-self: start;
-  min-height: 40px;
-  border: 0;
-  background: transparent;
-  padding: 0;
-}
-
-.map-place-list__item.is-selected .place-card {
+.map-place-select:hover,
+.map-place-select.is-selected {
   border-color: var(--forest);
   box-shadow: 0 0 0 3px rgb(13 59 53 / 0.1);
+}
+
+.map-place-select__name {
+  font-size: 1rem;
+  font-weight: 850;
+  line-height: 1.45;
 }
 
 .place-map {
@@ -1079,17 +1085,77 @@ pre {
   backdrop-filter: blur(8px);
 }
 
+.detail-sheet--compact {
+  position: relative;
+  gap: 6px;
+  min-height: 0;
+  padding: 12px;
+  box-shadow: 0 14px 32px rgb(19 39 34 / 0.16);
+}
+
+.detail-sheet--compact .detail-sheet__top {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  min-height: 0;
+}
+
+.detail-sheet--compact .sheet-close {
+  width: 32px;
+  height: 32px;
+}
+
+.detail-sheet--compact .card-kicker,
+.detail-sheet--compact h2 {
+  padding-right: 38px;
+}
+
+.detail-sheet--compact .card-kicker {
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
+.detail-sheet--compact h2 {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 0.94rem;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.detail-sheet--compact .card-line {
+  gap: 6px;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.detail-sheet--compact .card-line svg {
+  margin-top: 2px;
+}
+
+.detail-sheet--compact .sheet-actions {
+  gap: 6px;
+  margin-top: 1px;
+}
+
+.detail-sheet--compact .text-link {
+  min-height: 32px;
+  font-size: 0.82rem;
+}
+
 .map-detail-popover {
   position: absolute;
-  right: 10px;
-  bottom: 36px;
-  left: 10px;
+  right: 12px;
+  bottom: calc(84px + env(safe-area-inset-bottom));
+  left: auto;
+  width: min(300px, calc(100% - 24px));
   z-index: 500;
   pointer-events: none;
 }
 
 .map-detail-popover .detail-sheet {
-  max-height: min(44dvh, 340px);
+  max-height: min(42dvh, 260px);
   overflow: auto;
   pointer-events: auto;
   overscroll-behavior: contain;
@@ -1256,11 +1322,11 @@ pre {
     right: 14px;
     bottom: auto;
     left: auto;
-    width: min(340px, calc(100% - 28px));
+    width: min(300px, calc(100% - 28px));
   }
 
   .map-detail-popover .detail-sheet {
-    max-height: min(52dvh, 500px);
+    max-height: min(48dvh, 320px);
   }
 
   .bottom-nav {

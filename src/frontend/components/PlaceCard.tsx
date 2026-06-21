@@ -1,7 +1,7 @@
 import { ExternalLink, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { Place } from "../../shared/types";
-import { formatDateOnly, googleMapsUrl } from "../lib/format";
+import { googleMapsUrl } from "../lib/format";
 
 export function PlaceCard({ place, showMapLink = true }: { place: Place; showMapLink?: boolean }) {
   const mapsUrl = googleMapsUrl(place);
@@ -33,7 +33,6 @@ export function PlaceCard({ place, showMapLink = true }: { place: Place; showMap
           </a>
         ) : null}
       </div>
-      {place.lastSeenAt ? <p className="card-meta">データ取得日 {formatDateOnly(place.lastSeenAt)}</p> : null}
     </article>
   );
 }
