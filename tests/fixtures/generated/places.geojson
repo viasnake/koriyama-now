@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-06-20T12:00:00.000Z",
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "place_aed_1",
+      "geometry": { "type": "Point", "coordinates": [140.388, 37.398] },
+      "properties": {
+        "name": "郡山駅前AED",
+        "dataset_id": "aed",
+        "category": "aed",
+        "categories": ["aed"],
+        "source_name": "郡山市オープンデータ",
+        "unofficial": true
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "place_aed_2",
+      "geometry": { "type": "Point", "coordinates": [140.36, 37.404] },
+      "properties": {
+        "name": "市民センターAED",
+        "dataset_id": "public_facilities",
+        "category": "facility",
+        "categories": ["aed", "facility"],
+        "source_name": "郡山市オープンデータ",
+        "unofficial": true
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "place_childcare_1",
+      "geometry": { "type": "Point", "coordinates": [140.36, 37.405] },
+      "properties": {
+        "name": "桔梗保育園",
+        "dataset_id": "childcare_facilities",
+        "category": "facility",
+        "categories": ["childcare", "facility"],
+        "source_name": "郡山市オープンデータ",
+        "unofficial": true
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "place_wifi_1",
+      "geometry": { "type": "Point", "coordinates": [140.37, 37.397] },
+      "properties": {
+        "name": "中央図書館Wi-Fi",
+        "dataset_id": "public_wifi",
+        "category": "public_wifi",
+        "categories": ["public_wifi"],
+        "source_name": "郡山市オープンデータ",
+        "unofficial": true
+      }
+    }
+  ]
+}

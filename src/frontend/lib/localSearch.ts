@@ -1,22 +1,75 @@
 import type { SearchIndexItem } from "../../shared/types";
 import { placeCategoryAliases } from "./constants";
 
-export function searchLocalItems(query: string, indexItems: SearchIndexItem[]): SearchIndexItem[] {
+export type SearchResultType = "all" | "place" | "news";
+
+export type LocalSearchFilters = {
+  type?: SearchResultType;
+  category?: string;
+};
+
+export function searchLocalItems(
+  query: string,
+  indexItems: SearchIndexItem[],
+  filters: LocalSearchFilters = {}
+): SearchIndexItem[] {
   const normalized = normalizeSearchText(query);
-  if (!normalized) {
+  const category = filters.category ?? placeCategoryAliases[normalized];
+  const type = filters.type ?? "all";
+
+  if (!normalized && !category) {
     return [];
   }
 
-  const category = placeCategoryAliases[normalized];
   const terms = normalized.split(" ").filter(Boolean);
 
-  return indexItems.filter((item) => {
-    if (category) {
-      return item.type === "place" && itemMatchesPlaceCategory(item, category);
-    }
+  return indexItems
+    .filter((item) => type === "all" || item.type === type)
+    .filter((item) => !category || (item.type === "place" && itemMatchesPlaceCategory(item, category)))
+    .map((item) => ({
+      item,
+      score: scoreSearchItem(item, terms, Boolean(category))
+    }))
+    .filter(({ score }) => score > 0)
+    .sort((left, right) => right.score - left.score || left.item.name.localeCompare(right.item.name, "ja"))
+    .map(({ item }) => item);
+}
 
-    return terms.every((term) => item.keywords.includes(term));
-  });
+function scoreSearchItem(item: SearchIndexItem, terms: string[], hasCategory: boolean): number {
+  if (terms.length === 0) {
+    return hasCategory ? 1 : 0;
+  }
+
+  const name = normalizeSearchText(item.name);
+  const category = normalizeSearchText(`${item.category} ${item.categoryLabel} ${(item.categories ?? []).join(" ")}`);
+  const tags = normalizeSearchText((item.tags ?? []).join(" "));
+  const address = normalizeSearchText(item.address ?? "");
+
+  if (!terms.every((term) => item.keywords.includes(term))) {
+    return 0;
+  }
+
+  return terms.reduce((score, term) => {
+    if (name === term) {
+      return score + 100;
+    }
+    if (name.startsWith(term)) {
+      return score + 80;
+    }
+    if (name.includes(term)) {
+      return score + 60;
+    }
+    if (category.includes(term)) {
+      return score + 42;
+    }
+    if (tags.includes(term)) {
+      return score + 32;
+    }
+    if (address.includes(term)) {
+      return score + 24;
+    }
+    return score + 10;
+  }, 0);
 }
 
 export function normalizeSearchText(value: string): string {
@@ -29,7 +82,7 @@ export function normalizeSearchText(value: string): string {
 }
 
 function itemMatchesPlaceCategory(item: SearchIndexItem, category: string): boolean {
-  const values = [item.category].filter(Boolean);
+  const values = [item.category, ...(item.categories ?? [])].filter(Boolean);
 
   if (category === "aed") {
     return values.includes("aed") || values.includes("safety");

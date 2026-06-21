@@ -55,17 +55,19 @@ export function PlaceDetailSheet({ place, isLoading = false, errorMessage, onClo
         {mapsUrl ? (
           <a href={mapsUrl} target="_blank" rel="noreferrer" className="primary-link">
             Google Mapsで見る
+            <span className="sr-only">（新しいタブで開きます）</span>
             <ExternalLink aria-hidden="true" size={16} />
           </a>
         ) : null}
         {place.officialUrl ? (
           <a href={place.officialUrl} target="_blank" rel="noreferrer" className="text-link">
             公式ページ
+            <span className="sr-only">（新しいタブで開きます）</span>
             <ExternalLink aria-hidden="true" size={14} />
           </a>
         ) : null}
       </div>
-      {place.lastSeenAt ? <p className="card-meta">データ確認日 {formatDateOnly(place.lastSeenAt)}</p> : null}
+      {place.lastSeenAt ? <p className="card-meta">データ取得日 {formatDateOnly(place.lastSeenAt)}</p> : null}
     </aside>
   );
 }

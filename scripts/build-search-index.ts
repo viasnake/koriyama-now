@@ -41,6 +41,8 @@ function toPlaceSearchItem(place: PlaceListData["places"][number]): SearchIndexI
     place.name,
     place.category,
     place.categoryLabel,
+    ...(place.categories ?? []),
+    ...(place.categoryLabels ?? []),
     place.subcategory,
     place.address,
     place.phone
@@ -54,6 +56,7 @@ function toPlaceSearchItem(place: PlaceListData["places"][number]): SearchIndexI
     name: place.name,
     category: place.subcategory ?? place.category,
     categoryLabel: place.categoryLabel,
+    categories: place.categories,
     address: place.address,
     keywords: normalizeSearchText(keywords)
   };

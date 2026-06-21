@@ -55,23 +55,26 @@ export default function Place() {
             {mapsUrl ? (
               <a className="primary-link" href={mapsUrl} target="_blank" rel="noreferrer">
                 Google Mapsで見る
+                <span className="sr-only">（新しいタブで開きます）</span>
                 <ExternalLink aria-hidden="true" size={16} />
               </a>
             ) : null}
             {place.officialUrl ? (
               <a className="text-link" href={place.officialUrl} target="_blank" rel="noreferrer">
                 公式ページ
+                <span className="sr-only">（新しいタブで開きます）</span>
                 <ExternalLink aria-hidden="true" size={14} />
               </a>
             ) : null}
             {place.sourceUrl ? (
               <a className="text-link" href={place.sourceUrl} target="_blank" rel="noreferrer">
                 出典
+                <span className="sr-only">（新しいタブで開きます）</span>
                 <ExternalLink aria-hidden="true" size={14} />
               </a>
             ) : null}
           </div>
-          {place.lastSeenAt ? <p className="card-meta">データ確認日 {formatDateOnly(place.lastSeenAt)}</p> : null}
+          {place.lastSeenAt ? <p className="card-meta">データ取得日 {formatDateOnly(place.lastSeenAt)}</p> : null}
         </Section>
       ) : null}
 

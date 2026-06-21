@@ -3,6 +3,8 @@ export type Place = {
   name: string;
   category: string;
   categoryLabel: string;
+  categories?: string[];
+  categoryLabels?: string[];
   subcategory?: string;
   address?: string;
   lat?: number;
@@ -12,6 +14,7 @@ export type Place = {
   sourceUrl?: string;
   lastSeenAt?: string;
   firstSeenAt?: string;
+  changedAt?: string;
   attributes?: Record<string, unknown>;
 };
 
@@ -83,6 +86,7 @@ export type SearchIndexItem = {
   name: string;
   category: string;
   categoryLabel: string;
+  categories?: string[];
   address?: string;
   url?: string;
   publishedAt?: string;
@@ -108,6 +112,7 @@ export type FeatureProperties = {
   name?: string;
   dataset_id?: string;
   category?: string;
+  categories?: string[];
   source_name?: string;
   unofficial?: boolean;
 };

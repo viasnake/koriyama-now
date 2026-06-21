@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Map as MapIcon } from "lucide-react";
+import { KeyboardEvent } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import type { SearchIndexData, SearchIndexItem } from "../../shared/types";
 import { OfficialSearchBox, OfficialSearchResults } from "../components/OfficialSiteSearch";
@@ -7,11 +8,29 @@ import { CardSkeleton, EmptyState, Section, SectionError } from "../components/S
 import { SearchResultCard } from "../components/SearchResultCard";
 import { SearchBox } from "../components/SearchBox";
 import { placeCategories, searchSuggestions } from "../lib/constants";
-import { searchLocalItems } from "../lib/localSearch";
+import { type SearchResultType, searchLocalItems } from "../lib/localSearch";
 import { searchConfig } from "../lib/searchConfig";
 import { generatedFiles, getGeneratedJson } from "../lib/staticDataClient";
 
 type SearchMode = "local" | "official";
+
+type SearchResultsData = {
+  items: SearchIndexItem[];
+  total: number;
+};
+
+const searchResultLimit = 40;
+
+const searchModes = [
+  { id: "local", label: "サイト内を探す" },
+  { id: "official", label: "公式サイトを探す" }
+] as const;
+
+const resultTypes = [
+  { id: "all", label: "すべて" },
+  { id: "place", label: "施設" },
+  { id: "news", label: "お知らせ" }
+] as const;
 
 export default function SearchPage() {
   const [params] = useSearchParams();
@@ -19,15 +38,27 @@ export default function SearchPage() {
   const hasOfficialSearch = searchConfig.programmableSearch.enabled;
   const mode = resolveSearchMode(params, hasOfficialSearch);
   const query = mode === "official" ? (params.get("official_q") ?? params.get("q") ?? "") : (params.get("q") ?? "");
+  const requestedType = resolveResultType(params.get("type"));
+  const category = resolvePlaceCategory(params.get("category"));
+  const resultType = category ? "place" : requestedType;
   const searchQuery = useQuery({
-    queryKey: ["search", query],
+    queryKey: ["search", query, resultType, category],
     queryFn: async () => {
       const index = await getGeneratedJson<SearchIndexData>(generatedFiles.searchIndex);
-      return searchLocalItems(query, index.items).slice(0, 40);
+      const results = searchLocalItems(query, index.items, {
+        type: resultType,
+        category: category ?? undefined
+      });
+
+      return {
+        items: results.slice(0, searchResultLimit),
+        total: results.length
+      };
     },
-    enabled: mode === "local" && query.length > 0
+    enabled: mode === "local" && (query.length > 0 || Boolean(category))
   });
-  const toSearchPath = (nextMode: SearchMode, nextQuery = query) => buildSearchPath(nextMode, nextQuery);
+  const toSearchPath = (nextMode: SearchMode, nextQuery = query) =>
+    buildSearchPath(nextMode, nextQuery, { type: resultType, category });
 
   return (
     <div className="page page--search">
@@ -42,37 +73,45 @@ export default function SearchPage() {
 
       {hasOfficialSearch ? (
         <div className="search-mode-tabs" role="tablist" aria-label="検索の種類">
-          <button
-            type="button"
-            role="tab"
-            aria-selected={mode === "local"}
-            className={`search-mode-tab${mode === "local" ? " is-active" : ""}`}
-            onClick={() => navigate(toSearchPath("local"))}
-          >
-            サイト内を探す
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={mode === "official"}
-            className={`search-mode-tab${mode === "official" ? " is-active" : ""}`}
-            onClick={() => navigate(toSearchPath("official"))}
-          >
-            公式サイトを探す
-          </button>
+          {searchModes.map((item) => (
+            <button
+              type="button"
+              role="tab"
+              id={`search-mode-tab-${item.id}`}
+              aria-selected={mode === item.id}
+              aria-controls={`search-mode-panel-${item.id}`}
+              tabIndex={mode === item.id ? 0 : -1}
+              className={`search-mode-tab${mode === item.id ? " is-active" : ""}`}
+              key={item.id}
+              onClick={() => navigate(toSearchPath(item.id))}
+              onKeyDown={(event) => handleSearchModeKeyDown(event, mode, toSearchPath, navigate)}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
       ) : null}
 
       {mode === "local" ? (
-        <LocalSearchPanel
-          query={query}
-          isLoading={searchQuery.isLoading}
-          isError={searchQuery.isError}
-          results={searchQuery.data}
-          onSearch={(nextQuery) => navigate(buildSearchPath("local", nextQuery))}
-        />
+        <div
+          role={hasOfficialSearch ? "tabpanel" : undefined}
+          id="search-mode-panel-local"
+          aria-labelledby={hasOfficialSearch ? "search-mode-tab-local" : undefined}
+        >
+          <LocalSearchPanel
+            query={query}
+            category={category}
+            resultType={resultType}
+            isLoading={searchQuery.isLoading}
+            isError={searchQuery.isError}
+            results={searchQuery.data}
+            onSearch={(nextQuery) => navigate(buildSearchPath("local", nextQuery, { type: resultType, category }))}
+          />
+        </div>
       ) : (
-        <OfficialSearchPanel query={query} cx={searchConfig.programmableSearch.cx} />
+        <div role="tabpanel" id="search-mode-panel-official" aria-labelledby="search-mode-tab-official">
+          <OfficialSearchPanel query={query} cx={searchConfig.programmableSearch.cx} />
+        </div>
       )}
     </div>
   );
@@ -80,23 +119,47 @@ export default function SearchPage() {
 
 function LocalSearchPanel({
   query,
+  category,
+  resultType,
   isLoading,
   isError,
   results,
   onSearch
 }: {
   query: string;
+  category: string | null;
+  resultType: SearchResultType;
   isLoading: boolean;
   isError: boolean;
-  results?: SearchIndexItem[];
+  results?: SearchResultsData;
   onSearch: (query: string) => void;
 }) {
   const navigate = useNavigate();
-  const hasPlaceResults = Boolean(results?.some((item) => item.type === "place"));
+  const items = results?.items ?? [];
+  const hasPlaceResults = Boolean(items.some((item) => item.type === "place")) || Boolean(category);
+  const categoryLabel = category ? placeCategories.find((item) => item.id === category)?.label : undefined;
+  const title = resultSectionTitle(query, categoryLabel, results?.total);
+  const mapPath = category ? `/map?category=${encodeURIComponent(category)}` : `/map?q=${encodeURIComponent(query)}`;
 
   return (
     <div className="search-panel">
       <SearchBox defaultValue={query} onSearch={onSearch} />
+
+      {!category ? (
+        <div className="search-filter-row" role="group" aria-label="検索結果の種類">
+          {resultTypes.map((item) => (
+            <button
+              type="button"
+              className={`tab${resultType === item.id ? " is-active" : ""}`}
+              aria-pressed={resultType === item.id}
+              key={item.id}
+              onClick={() => navigate(buildSearchPath("local", query, { type: item.id, category: null }))}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       <div className="chip-row" aria-label="検索候補">
         {searchSuggestions.map((suggestion) => (
@@ -104,7 +167,7 @@ function LocalSearchPanel({
             type="button"
             className="chip"
             key={suggestion}
-            onClick={() => navigate(buildSearchPath("local", suggestion))}
+            onClick={() => navigate(buildSearchPath("local", suggestion, { type: resultType, category }))}
           >
             {suggestion}
           </button>
@@ -112,28 +175,31 @@ function LocalSearchPanel({
       </div>
 
       <Section
-        title={query ? `「${query}」の結果` : "検索結果"}
+        title={title}
         action={
-          query && (isLoading || hasPlaceResults) ? (
-            <Link to={`/map?q=${encodeURIComponent(query)}`} className="section-link">
+          (query || category) && (isLoading || hasPlaceResults) ? (
+            <Link to={mapPath} className="section-link">
               地図で見る
             </Link>
           ) : null
         }
       >
-        {query && isLoading ? <CardSkeleton /> : null}
+        {(query || category) && isLoading ? <CardSkeleton /> : null}
         {isError ? <SectionError message="検索結果を取得できませんでした。" /> : null}
-        {!query ? <CategoryPrompt /> : null}
-        {query && results?.length === 0 ? <ZeroResults /> : null}
-        {results?.map((item) => (
+        {!query && !category ? <CategoryPrompt /> : null}
+        {(query || category) && results?.total === 0 ? <ZeroResults /> : null}
+        {items.map((item) => (
           <div key={`${item.type}:${item.id}`}>
-            <SearchResultCard item={item} />
+            <SearchResultCard item={item} highlightQuery={query} />
           </div>
         ))}
+        {results && results.total > items.length ? (
+          <p className="notice-line">関連度の高い{items.length.toLocaleString("ja-JP")}件を表示しています。</p>
+        ) : null}
       </Section>
 
-      {query && hasPlaceResults ? (
-        <Link to={`/map?q=${encodeURIComponent(query)}`} className="map-cta map-cta--small">
+      {(query || category) && hasPlaceResults ? (
+        <Link to={mapPath} className="map-cta map-cta--small">
           <span>
             <MapIcon aria-hidden="true" size={20} />
             地図で見る
@@ -169,7 +235,27 @@ function resolveSearchMode(params: URLSearchParams, hasOfficialSearch: boolean):
   return "local";
 }
 
-function buildSearchPath(mode: SearchMode, query: string): string {
+function CategoryPrompt() {
+  return (
+    <div className="category-grid">
+      {placeCategories.slice(1).map((category) => (
+        <Link
+          key={category.id}
+          to={`/search?type=place&category=${encodeURIComponent(category.id)}`}
+          className="category-card"
+        >
+          <span>{category.label}</span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function buildSearchPath(
+  mode: SearchMode,
+  query: string,
+  filters: { type?: SearchResultType; category?: string | null } = {}
+): string {
   const params = new URLSearchParams();
   const trimmedQuery = query.trim();
 
@@ -181,21 +267,69 @@ function buildSearchPath(mode: SearchMode, query: string): string {
   if (mode === "official" && !trimmedQuery) {
     params.set("mode", "official");
   }
+  if (mode === "local" && filters.type && filters.type !== "all") {
+    params.set("type", filters.type);
+  }
+  if (mode === "local" && filters.category) {
+    params.set("category", filters.category);
+  }
 
   const search = params.toString();
   return search ? `/search?${search}` : "/search";
 }
 
-function CategoryPrompt() {
-  return (
-    <div className="category-grid">
-      {placeCategories.slice(1).map((category) => (
-        <Link key={category.id} to={`/search?q=${encodeURIComponent(category.label)}`} className="category-card">
-          <span>{category.label}</span>
-        </Link>
-      ))}
-    </div>
-  );
+function resolveResultType(value: string | null): SearchResultType {
+  return resultTypes.some((item) => item.id === value) ? (value as SearchResultType) : "all";
+}
+
+function resolvePlaceCategory(value: string | null): string | null {
+  if (!value || value === "all") {
+    return null;
+  }
+
+  return placeCategories.some((item) => item.id === value && item.id !== "all") ? value : null;
+}
+
+function resultSectionTitle(query: string, categoryLabel: string | undefined, total: number | undefined): string {
+  const count = total === undefined ? "" : ` ${total.toLocaleString("ja-JP")}件`;
+
+  if (categoryLabel) {
+    return query ? `${categoryLabel}の「${query}」${count}` : `${categoryLabel}の施設${count}`;
+  }
+
+  return query ? `「${query}」の結果${count}` : "検索結果";
+}
+
+function handleSearchModeKeyDown(
+  event: KeyboardEvent<HTMLButtonElement>,
+  currentMode: SearchMode,
+  toSearchPath: (mode: SearchMode) => string,
+  navigate: (path: string) => void
+) {
+  const currentIndex = searchModes.findIndex((item) => item.id === currentMode);
+  const lastIndex = searchModes.length - 1;
+  let nextIndex: number | undefined;
+
+  if (event.key === "ArrowRight") {
+    nextIndex = currentIndex === lastIndex ? 0 : currentIndex + 1;
+  } else if (event.key === "ArrowLeft") {
+    nextIndex = currentIndex === 0 ? lastIndex : currentIndex - 1;
+  } else if (event.key === "Home") {
+    nextIndex = 0;
+  } else if (event.key === "End") {
+    nextIndex = lastIndex;
+  }
+
+  if (nextIndex === undefined) {
+    return;
+  }
+
+  event.preventDefault();
+  const nextMode = searchModes[nextIndex].id;
+  navigate(toSearchPath(nextMode));
+  requestAnimationFrame(() => {
+    document.getElementById(`search-mode-tab-${nextMode}`)?.focus();
+  });
 }
 
 function ZeroResults() {
