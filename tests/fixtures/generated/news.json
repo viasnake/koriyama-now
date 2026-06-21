@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-06-20T12:00:00.000Z",
+  "entries": [
+    { "id": "news_01", "title": "熱中症に注意してください", "link": "/news/01", "category": "disaster", "categoryLabel": "防災", "publishedAt": "2026-06-20T09:00:00.000Z", "tags": ["熱中症", "防災"] },
+    { "id": "news_02", "title": "休日窓口のお知らせ", "link": "/news/02", "category": "life", "categoryLabel": "くらし", "publishedAt": "2026-06-20T08:00:00.000Z", "tags": ["手続き"] },
+    { "id": "news_03", "title": "夏のイベントを開催します", "link": "/news/03", "category": "event", "categoryLabel": "イベント", "publishedAt": "2026-06-20T07:00:00.000Z", "tags": ["イベント"] },
+    { "id": "news_04", "title": "子育て相談会のお知らせ", "link": "/news/04", "category": "childcare", "categoryLabel": "子育て", "publishedAt": "2026-06-19T09:00:00.000Z", "tags": ["子育て"] },
+    { "id": "news_05", "title": "公共施設の開館時間", "link": "/news/05", "category": "city_admin", "categoryLabel": "施設・行政", "publishedAt": "2026-06-19T08:00:00.000Z", "tags": ["公共施設"] },
+    { "id": "news_06", "title": "事業者向け補助金", "link": "/news/06", "category": "business", "categoryLabel": "事業者", "publishedAt": "2026-06-19T07:00:00.000Z", "tags": ["補助金"] },
+    { "id": "news_07", "title": "防災訓練を実施します", "link": "/news/07", "category": "disaster", "categoryLabel": "防災", "publishedAt": "2026-06-18T09:00:00.000Z", "tags": ["防災"] },
+    { "id": "news_08", "title": "ごみ収集日の変更", "link": "/news/08", "category": "life", "categoryLabel": "くらし", "publishedAt": "2026-06-18T08:00:00.000Z", "tags": ["ごみ"] },
+    { "id": "news_09", "title": "図書館映画会", "link": "/news/09", "category": "event", "categoryLabel": "イベント", "publishedAt": "2026-06-18T07:00:00.000Z", "tags": ["図書館"] },
+    { "id": "news_10", "title": "保育施設見学会", "link": "/news/10", "category": "childcare", "categoryLabel": "子育て", "publishedAt": "2026-06-17T09:00:00.000Z", "tags": ["保育"] },
+    { "id": "news_11", "title": "市民相談センターの案内", "link": "/news/11", "category": "city_admin", "categoryLabel": "施設・行政", "publishedAt": "2026-06-17T08:00:00.000Z", "tags": ["相談"] },
+    { "id": "news_12", "title": "入札情報", "link": "/news/12", "category": "business", "categoryLabel": "事業者", "publishedAt": "2026-06-17T07:00:00.000Z", "tags": ["入札"] },
+    { "id": "news_13", "title": "避難所一覧を更新しました", "link": "/news/13", "category": "disaster", "categoryLabel": "防災", "publishedAt": "2026-06-16T09:00:00.000Z", "tags": ["避難所"] },
+    { "id": "news_14", "title": "税の納期限", "link": "/news/14", "category": "life", "categoryLabel": "くらし", "publishedAt": "2026-06-16T08:00:00.000Z", "tags": ["税"] },
+    { "id": "news_15", "title": "市民スポーツ教室", "link": "/news/15", "category": "event", "categoryLabel": "イベント", "publishedAt": "2026-06-16T07:00:00.000Z", "tags": ["スポーツ"] },
+    { "id": "news_16", "title": "児童手当のお知らせ", "link": "/news/16", "category": "childcare", "categoryLabel": "子育て", "publishedAt": "2026-06-15T09:00:00.000Z", "tags": ["手当"] },
+    { "id": "news_17", "title": "行政センターからのお知らせ", "link": "/news/17", "category": "city_admin", "categoryLabel": "施設・行政", "publishedAt": "2026-06-15T08:00:00.000Z", "tags": ["行政"] },
+    { "id": "news_18", "title": "創業相談会", "link": "/news/18", "category": "business", "categoryLabel": "事業者", "publishedAt": "2026-06-15T07:00:00.000Z", "tags": ["創業"] },
+    { "id": "news_19", "title": "防犯メール登録案内", "link": "/news/19", "category": "disaster", "categoryLabel": "防災", "publishedAt": "2026-06-14T09:00:00.000Z", "tags": ["防犯"] },
+    { "id": "news_20", "title": "水道工事のお知らせ", "link": "/news/20", "category": "life", "categoryLabel": "くらし", "publishedAt": "2026-06-14T08:00:00.000Z", "tags": ["水道"] },
+    { "id": "news_21", "title": "音楽イベント", "link": "/news/21", "category": "event", "categoryLabel": "イベント", "publishedAt": "2026-06-14T07:00:00.000Z", "tags": ["音楽"] },
+    { "id": "news_22", "title": "親子講座", "link": "/news/22", "category": "childcare", "categoryLabel": "子育て", "publishedAt": "2026-06-13T09:00:00.000Z", "tags": ["講座"] },
+    { "id": "news_23", "title": "公民館講座", "link": "/news/23", "category": "city_admin", "categoryLabel": "施設・行政", "publishedAt": "2026-06-13T08:00:00.000Z", "tags": ["公民館"] },
+    { "id": "news_24", "title": "商店街支援", "link": "/news/24", "category": "business", "categoryLabel": "事業者", "publishedAt": "2026-06-13T07:00:00.000Z", "tags": ["商店街"] },
+    { "id": "news_25", "title": "雨量情報の見方", "link": "/news/25", "category": "disaster", "categoryLabel": "防災", "publishedAt": "2026-06-12T09:00:00.000Z", "tags": ["雨量"] },
+    { "id": "news_26", "title": "住民票の手続き", "link": "/news/26", "category": "life", "categoryLabel": "くらし", "publishedAt": "2026-06-12T08:00:00.000Z", "tags": ["住民票"] },
+    { "id": "news_27", "title": "美術館イベント", "link": "/news/27", "category": "event", "categoryLabel": "イベント", "publishedAt": "2026-06-12T07:00:00.000Z", "tags": ["美術館"] },
+    { "id": "news_28", "title": "乳幼児健診", "link": "/news/28", "category": "childcare", "categoryLabel": "子育て", "publishedAt": "2026-06-11T09:00:00.000Z", "tags": ["健診"] },
+    { "id": "news_29", "title": "窓口混雑予想", "link": "/news/29", "category": "city_admin", "categoryLabel": "施設・行政", "publishedAt": "2026-06-11T08:00:00.000Z", "tags": ["窓口"] },
+    { "id": "news_30", "title": "事業承継セミナー", "link": "/news/30", "category": "business", "categoryLabel": "事業者", "publishedAt": "2026-06-11T07:00:00.000Z", "tags": ["セミナー"] }
+  ],
+  "official_sites": [
+    {
+      "id": "official_site_city",
+      "title": "郡山市公式サイト",
+      "url": "https://www.city.koriyama.lg.jp/",
+      "tags": ["公式サイト"]
+    }
+  ]
+}

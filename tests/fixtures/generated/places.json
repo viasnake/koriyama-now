@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-06-20T12:00:00.000Z",
+  "count": 4,
+  "places": [
+    {
+      "id": "place_aed_1",
+      "name": "郡山駅前AED",
+      "category": "aed",
+      "categoryLabel": "AED",
+      "categories": ["aed"],
+      "categoryLabels": ["AED"],
+      "address": "駅前一丁目1-1",
+      "lat": 37.398,
+      "lng": 140.388,
+      "firstSeenAt": "2026-06-18T12:00:00.000Z",
+      "lastSeenAt": "2026-06-20T12:00:00.000Z"
+    },
+    {
+      "id": "place_aed_2",
+      "name": "市民センターAED",
+      "category": "facility",
+      "categoryLabel": "AED・公共施設",
+      "categories": ["aed", "facility"],
+      "categoryLabels": ["AED", "公共施設"],
+      "address": "朝日一丁目23-7",
+      "lat": 37.404,
+      "lng": 140.36,
+      "firstSeenAt": "2026-06-17T12:00:00.000Z",
+      "lastSeenAt": "2026-06-20T12:00:00.000Z"
+    },
+    {
+      "id": "place_childcare_1",
+      "name": "桔梗保育園",
+      "category": "facility",
+      "categoryLabel": "子育て・公共施設",
+      "categories": ["childcare", "facility"],
+      "categoryLabels": ["子育て", "公共施設"],
+      "address": "桜木二丁目21-26",
+      "lat": 37.405,
+      "lng": 140.36,
+      "phone": "024-925-5588",
+      "firstSeenAt": "2026-06-19T12:00:00.000Z",
+      "lastSeenAt": "2026-06-20T12:00:00.000Z"
+    },
+    {
+      "id": "place_wifi_1",
+      "name": "中央図書館Wi-Fi",
+      "category": "public_wifi",
+      "categoryLabel": "Wi-Fi",
+      "categories": ["public_wifi"],
+      "categoryLabels": ["Wi-Fi"],
+      "address": "麓山一丁目5-25",
+      "lat": 37.397,
+      "lng": 140.37,
+      "firstSeenAt": "2026-06-16T12:00:00.000Z",
+      "lastSeenAt": "2026-06-20T12:00:00.000Z"
+    }
+  ]
+}

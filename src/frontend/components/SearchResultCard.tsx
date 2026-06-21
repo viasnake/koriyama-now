@@ -1,34 +1,33 @@
 import { MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { NewsEntry, SearchIndexItem } from "../../shared/types";
+import { HighlightedText } from "./HighlightedText";
 import { NewsCard } from "./NewsCard";
 
 type SearchResultCardProps = {
   item: SearchIndexItem;
+  highlightQuery?: string;
 };
 
-export function SearchResultCard({ item }: SearchResultCardProps) {
+export function SearchResultCard({ item, highlightQuery }: SearchResultCardProps) {
   if (item.type === "news") {
-    return <NewsCard entry={toNewsEntry(item)} />;
+    return <NewsCard entry={toNewsEntry(item)} highlightQuery={highlightQuery} />;
   }
 
   return (
     <article className="place-card">
       <div className="card-kicker">施設 / {item.categoryLabel}</div>
       <h3>
-        <Link to={`/place/${encodeURIComponent(item.id)}`}>{item.name}</Link>
+        <Link to={`/place/${encodeURIComponent(item.id)}`}>
+          <HighlightedText text={item.name} query={highlightQuery} />
+        </Link>
       </h3>
       {item.address ? (
         <p className="card-line">
           <MapPin aria-hidden="true" size={16} />
-          {item.address}
+          <HighlightedText text={item.address} query={highlightQuery} />
         </p>
       ) : null}
-      <div className="card-actions">
-        <Link to={`/place/${encodeURIComponent(item.id)}`} className="text-link">
-          詳細を見る
-        </Link>
-      </div>
     </article>
   );
 }

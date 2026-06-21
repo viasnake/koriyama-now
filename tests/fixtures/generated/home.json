@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-06-20T12:00:00.000Z",
+  "health": {
+    "status": "ok",
+    "placesCount": 4,
+    "lastSuccessAt": "2026-06-20T12:00:00.000Z",
+    "rssLastSuccessAt": "2026-06-20T12:00:00.000Z",
+    "rssEntriesCount": 30
+  },
+  "featured_topics": [
+    {
+      "id": "news_important_heat",
+      "title": "熱中症に注意してください",
+      "link": "/news/heat",
+      "category": "disaster",
+      "categoryLabel": "防災",
+      "publishedAt": "2026-06-20T09:00:00.000Z",
+      "tags": ["熱中症", "防災"]
+    }
+  ],
+  "news": [
+    {
+      "id": "news_latest_1",
+      "title": "休日窓口のお知らせ",
+      "link": "/news/weekend",
+      "category": "life",
+      "categoryLabel": "くらし",
+      "publishedAt": "2026-06-20T08:00:00.000Z",
+      "tags": ["手続き"]
+    },
+    {
+      "id": "news_latest_2",
+      "title": "夏のイベントを開催します",
+      "link": "/news/event",
+      "category": "event",
+      "categoryLabel": "イベント",
+      "publishedAt": "2026-06-19T08:00:00.000Z",
+      "tags": ["イベント"]
+    }
+  ],
+  "places": [
+    {
+      "id": "place_childcare_1",
+      "name": "桔梗保育園",
+      "category": "facility",
+      "categoryLabel": "子育て・公共施設",
+      "categories": ["childcare", "facility"],
+      "categoryLabels": ["子育て", "公共施設"],
+      "address": "桜木二丁目21-26",
+      "lat": 37.405,
+      "lng": 140.36,
+      "phone": "024-925-5588",
+      "firstSeenAt": "2026-06-19T12:00:00.000Z",
+      "lastSeenAt": "2026-06-20T12:00:00.000Z"
+    },
+    {
+      "id": "place_aed_1",
+      "name": "郡山駅前AED",
+      "category": "aed",
+      "categoryLabel": "AED",
+      "categories": ["aed"],
+      "categoryLabels": ["AED"],
+      "address": "駅前一丁目1-1",
+      "lat": 37.398,
+      "lng": 140.388,
+      "firstSeenAt": "2026-06-18T12:00:00.000Z",
+      "lastSeenAt": "2026-06-20T12:00:00.000Z"
+    }
+  ],
+  "category_counts": [
+    { "id": "aed", "label": "AED", "count": 2 },
+    { "id": "medical", "label": "医療", "count": 1 },
+    { "id": "childcare", "label": "子育て", "count": 1 },
+    { "id": "public_toilets", "label": "トイレ", "count": 1 },
+    { "id": "public_wifi", "label": "Wi-Fi", "count": 1 },
+    { "id": "education", "label": "学校", "count": 1 },
+    { "id": "facility", "label": "公共施設", "count": 1 }
+  ]
+}

@@ -27,10 +27,13 @@ export function SearchBox({ defaultValue = "", placeholder = "キーワードで
       <Search aria-hidden="true" size={21} />
       <input
         id="site-search"
+        type="search"
+        name="q"
         value={value}
         onChange={(event) => setValue(event.currentTarget.value)}
         placeholder={placeholder}
         inputMode="search"
+        enterKeyHint="search"
         autoComplete="off"
       />
       <button type="submit">検索</button>

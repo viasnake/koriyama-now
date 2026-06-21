@@ -14,7 +14,6 @@ import type {
 } from "../src/shared/types";
 import { mergeAnnouncements } from "../src/shared/announcements";
 import {
-  categoryCountsFromHealth,
   categoryLabel,
   normalizeHealth,
   normalizeNews,
@@ -26,7 +25,17 @@ const apiBase = process.env.UPSTREAM_API_BASE ?? "https://civic-koriyama-data.al
 const generatedDir = join(process.cwd(), "public", "generated");
 const featuredTopicLimit = 3;
 const featuredTopicLookbackDays = 14;
+const homePlaceLimit = 8;
 const siteFeedEntryLimit = 20;
+const displayCategoryOrder = [
+  "aed",
+  "medical",
+  "childcare",
+  "public_toilets",
+  "public_wifi",
+  "education",
+  "facility"
+];
 
 const featuredTopicKeywords = [
   "補助金",
@@ -47,6 +56,19 @@ const featuredTopicKeywords = [
   "交通事故",
   "事故防止",
   "支援事業"
+];
+
+const featuredTopicPriorityKeywords = [
+  "防災",
+  "災害",
+  "避難",
+  "詐欺",
+  "防犯",
+  "熱中症",
+  "期限",
+  "締切",
+  "申請期限",
+  "受付期限"
 ];
 
 const routineTopicKeywords = [
@@ -82,13 +104,17 @@ async function main(): Promise<void> {
 
   try {
     const generatedAt = new Date().toISOString();
-    const [places, newsSource, health] = await Promise.all([
+    const [rawPlaces, newsSource, health] = await Promise.all([
       fetchAllPlaces(),
       fetchNews(),
       fetchHealth()
     ]);
-    const categoryCounts = health ? categoryCountsFromHealth(health.raw) : categoryCountsFromPlaces(places);
-    const healthSummary = health?.summary ?? fallbackHealth(places);
+    const places = mergeDuplicatePlaces(rawPlaces);
+    const categoryCounts = categoryCountsFromPlaces(places);
+    const healthSummary = {
+      ...(health?.summary ?? fallbackHealth(places)),
+      placesCount: places.length
+    };
     const announcements = mergeAnnouncements(newsSource.entries);
 
     const home: HomeData = {
@@ -96,7 +122,7 @@ async function main(): Promise<void> {
       health: healthSummary,
       featured_topics: buildFeaturedTopics(announcements, generatedAt),
       news: announcements.slice(0, 6),
-      places: places.slice(0, 8),
+      places: buildNewlyRegisteredPlaces(places),
       category_counts: categoryCounts
     };
 
@@ -129,7 +155,9 @@ async function main(): Promise<void> {
       writeGenerated("build-meta.json", buildMeta)
     ]);
 
-    console.log(`generated ${places.length} places and ${announcements.length} announcements`);
+    console.log(
+      `generated ${places.length} places (${rawPlaces.length} source records) and ${announcements.length} announcements`
+    );
   } catch (error) {
     await preserveExistingGenerated(error);
   }
@@ -356,14 +384,21 @@ function buildFeaturedTopics(news: NewsEntry[], referenceDate: string): NewsEntr
     ? referenceTimestamp - featuredTopicLookbackDays * 24 * 60 * 60 * 1000
     : 0;
   const seenTitles = new Set<string>();
-
-  return news
+  const candidates = news
     .filter((entry) => {
       const publishedTimestamp = timestamp(entry.publishedAt);
       return publishedTimestamp !== undefined && publishedTimestamp >= cutoff;
     })
-    .filter(isFeaturedTopic)
-    .filter((entry) => {
+    .map((entry) => ({
+      entry,
+      score: featuredTopicScore(entry)
+    }))
+    .filter(({ score }) => score > 0)
+    .sort((left, right) => {
+      const publishedDelta = (timestamp(right.entry.publishedAt) ?? 0) - (timestamp(left.entry.publishedAt) ?? 0);
+      return right.score - left.score || publishedDelta || left.entry.title.localeCompare(right.entry.title, "ja");
+    })
+    .filter(({ entry }) => {
       const key = normalizeTopicText(entry.title);
       if (seenTitles.has(key)) {
         return false;
@@ -371,23 +406,51 @@ function buildFeaturedTopics(news: NewsEntry[], referenceDate: string): NewsEntr
       seenTitles.add(key);
       return true;
     })
-    .slice(0, featuredTopicLimit);
+    .map(({ entry }) => entry);
+
+  const selected: NewsEntry[] = [];
+  const selectedCategories = new Set<string>();
+
+  candidates.forEach((entry) => {
+    if (selected.length >= featuredTopicLimit || selectedCategories.has(entry.category)) {
+      return;
+    }
+    selected.push(entry);
+    selectedCategories.add(entry.category);
+  });
+
+  candidates.forEach((entry) => {
+    if (selected.length >= featuredTopicLimit || selected.some((selectedEntry) => selectedEntry.id === entry.id)) {
+      return;
+    }
+    selected.push(entry);
+  });
+
+  return selected;
 }
 
-function isFeaturedTopic(entry: NewsEntry): boolean {
+function featuredTopicScore(entry: NewsEntry): number {
   const text = normalizeTopicText([entry.title, entry.category, entry.categoryLabel, ...entry.tags].join(" "));
   if (routineTopicKeywords.some((keyword) => text.includes(normalizeTopicText(keyword)))) {
-    return false;
+    return 0;
   }
 
-  return featuredTopicKeywords.some((keyword) => text.includes(normalizeTopicText(keyword)));
+  return (
+    featuredTopicKeywords.reduce((score, keyword) => {
+      return text.includes(normalizeTopicText(keyword)) ? score + 10 : score;
+    }, 0) +
+    featuredTopicPriorityKeywords.reduce((score, keyword) => {
+      return text.includes(normalizeTopicText(keyword)) ? score + 25 : score;
+    }, 0)
+  );
 }
 
 function categoryCountsFromPlaces(places: Place[]): CategoryCount[] {
   const counts = new Map<string, number>();
   places.forEach((place) => {
-    const id = place.subcategory ?? place.category;
-    counts.set(id, (counts.get(id) ?? 0) + 1);
+    normalizedCategoryIdsForUi(place).forEach((id) => {
+      counts.set(id, (counts.get(id) ?? 0) + 1);
+    });
   });
 
   return Array.from(counts.entries())
@@ -397,6 +460,189 @@ function categoryCountsFromPlaces(places: Place[]): CategoryCount[] {
       label: categoryLabel(id),
       count
     }));
+}
+
+function buildNewlyRegisteredPlaces(places: Place[]): Place[] {
+  return [...places]
+    .sort((left, right) => {
+      const leftTime = timestamp(left.firstSeenAt) ?? timestamp(left.lastSeenAt) ?? 0;
+      const rightTime = timestamp(right.firstSeenAt) ?? timestamp(right.lastSeenAt) ?? 0;
+      return rightTime - leftTime || left.name.localeCompare(right.name, "ja");
+    })
+    .slice(0, homePlaceLimit);
+}
+
+function mergeDuplicatePlaces(places: Place[]): Place[] {
+  const merged = new Map<string, Place>();
+
+  places.forEach((place) => {
+    const key = placeMergeKey(place);
+    const existing = merged.get(key);
+
+    if (!existing) {
+      const categories = categoryIdsForPlace(place);
+      merged.set(key, {
+        ...place,
+        categories,
+        categoryLabels: categoryLabelsForIds(categories),
+        categoryLabel: categoryLabelsForIds(categories).join("・") || place.categoryLabel
+      });
+      return;
+    }
+
+    const categories = categoryIdsForPlace(existing, place);
+    const categoryLabels = categoryLabelsForIds(categories);
+
+    merged.set(key, {
+      ...existing,
+      categoryLabel: categoryLabels.join("・") || existing.categoryLabel,
+      categories,
+      categoryLabels,
+      address: existing.address ?? place.address,
+      lat: existing.lat ?? place.lat,
+      lng: existing.lng ?? place.lng,
+      phone: existing.phone ?? place.phone,
+      officialUrl: existing.officialUrl ?? place.officialUrl,
+      sourceUrl: existing.sourceUrl ?? place.sourceUrl,
+      firstSeenAt: earliestIso(existing.firstSeenAt, place.firstSeenAt),
+      lastSeenAt: latestIso(existing.lastSeenAt, place.lastSeenAt),
+      changedAt: latestIso(existing.changedAt, place.changedAt),
+      attributes: mergeAttributes(existing.attributes, place.attributes)
+    });
+  });
+
+  return Array.from(merged.values());
+}
+
+function placeMergeKey(place: Place): string {
+  const name = normalizePlaceIdentity(place.name);
+  const address = normalizePlaceIdentity(place.address);
+  if (name && address) {
+    return `name-address:${name}\u0000${address}`;
+  }
+
+  const coordinate = coordinateKey(place);
+  if (name && coordinate) {
+    return `name-coordinate:${name}\u0000${coordinate}`;
+  }
+
+  return `id:${place.id}`;
+}
+
+function normalizePlaceIdentity(value: string | undefined): string {
+  return (value ?? "")
+    .normalize("NFKC")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/[()（）\[\]［］,，、。.．・]/g, "");
+}
+
+function coordinateKey(place: Place): string | undefined {
+  if (place.lat === undefined || place.lng === undefined) {
+    return undefined;
+  }
+
+  return `${place.lat.toFixed(5)},${place.lng.toFixed(5)}`;
+}
+
+function categoryIdsForPlace(...places: Place[]): string[] {
+  return uniqueStrings(
+    places.flatMap((place) => [
+      ...(place.categories ?? []),
+      place.subcategory,
+      place.category
+    ])
+  );
+}
+
+function normalizedCategoryIdsForUi(place: Place): string[] {
+  return uniqueStrings(categoryIdsForPlace(place).map(normalizePlaceCategoryId));
+}
+
+function normalizePlaceCategoryId(value: string): string {
+  if (value === "safety") {
+    return "aed";
+  }
+  if (value === "medical_institutions") {
+    return "medical";
+  }
+  if (value === "schools") {
+    return "education";
+  }
+  if (value === "childcare_facilities") {
+    return "childcare";
+  }
+  if (value === "public_facilities") {
+    return "facility";
+  }
+  if (value === "toilets") {
+    return "public_toilets";
+  }
+  if (value === "wifi") {
+    return "public_wifi";
+  }
+
+  return value;
+}
+
+function categoryLabelsForIds(ids: string[]): string[] {
+  const normalizedIds = uniqueStrings(ids.map(normalizePlaceCategoryId)).sort((left, right) => {
+    const leftIndex = displayCategoryOrder.indexOf(left);
+    const rightIndex = displayCategoryOrder.indexOf(right);
+    const normalizedLeftIndex = leftIndex === -1 ? Number.POSITIVE_INFINITY : leftIndex;
+    const normalizedRightIndex = rightIndex === -1 ? Number.POSITIVE_INFINITY : rightIndex;
+
+    return normalizedLeftIndex - normalizedRightIndex || left.localeCompare(right, "ja");
+  });
+
+  return uniqueStrings(normalizedIds.map(categoryLabel));
+}
+
+function earliestIso(left: string | undefined, right: string | undefined): string | undefined {
+  return compareIso(left, right, "earliest");
+}
+
+function latestIso(left: string | undefined, right: string | undefined): string | undefined {
+  return compareIso(left, right, "latest");
+}
+
+function compareIso(
+  left: string | undefined,
+  right: string | undefined,
+  direction: "earliest" | "latest"
+): string | undefined {
+  const leftTime = timestamp(left);
+  const rightTime = timestamp(right);
+
+  if (leftTime === undefined) {
+    return right;
+  }
+  if (rightTime === undefined) {
+    return left;
+  }
+
+  return direction === "earliest"
+    ? leftTime <= rightTime ? left : right
+    : leftTime >= rightTime ? left : right;
+}
+
+function mergeAttributes(
+  left: Record<string, unknown> | undefined,
+  right: Record<string, unknown> | undefined
+): Record<string, unknown> | undefined {
+  if (!left && !right) {
+    return undefined;
+  }
+
+  return {
+    ...(left ?? {}),
+    ...(right ?? {})
+  };
+}
+
+function uniqueStrings(values: Array<string | undefined>): string[] {
+  return Array.from(new Set(values.filter((value): value is string => Boolean(value))));
 }
 
 function fallbackHealth(places: Place[]): HealthSummary {

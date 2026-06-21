@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="郡山市の施設・お知らせ検索 Civic Koriyama">
+  <rect width="1200" height="630" fill="#0d3b35"/>
+  <path d="M0 0h1200v630H0z" fill="#0d3b35"/>
+  <g opacity=".18" stroke="#edf4f0" stroke-width="2">
+    <path d="M0 90h1200M0 180h1200M0 270h1200M0 360h1200M0 450h1200M0 540h1200"/>
+    <path d="M120 0v630M240 0v630M360 0v630M480 0v630M600 0v630M720 0v630M840 0v630M960 0v630M1080 0v630"/>
+  </g>
+  <circle cx="994" cy="132" r="54" fill="#e0ac35"/>
+  <path d="M995 250c-74-84-111-145-111-184C884 5 934-45 995-45s111 50 111 111c0 39-37 100-111 184z" fill="#b5522e" opacity=".92"/>
+  <circle cx="995" cy="66" r="28" fill="#ffffff"/>
+  <text x="96" y="126" fill="#edf4f0" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="34" font-weight="800" letter-spacing="0">Civic Koriyama</text>
+  <text x="96" y="255" fill="#ffffff" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', system-ui, sans-serif" font-size="72" font-weight="850" letter-spacing="0">郡山の施設・お知らせ</text>
+  <text x="96" y="350" fill="#edf4f0" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', system-ui, sans-serif" font-size="40" font-weight="700" letter-spacing="0">AED・医療・子育て施設や市のお知らせを探せます</text>
+  <g transform="translate(96 452)">
+    <rect width="134" height="54" rx="10" fill="#ffffff"/>
+    <text x="67" y="36" text-anchor="middle" fill="#0d3b35" font-family="system-ui, sans-serif" font-size="24" font-weight="850">AED</text>
+    <rect x="154" width="134" height="54" rx="10" fill="#ffffff"/>
+    <text x="221" y="36" text-anchor="middle" fill="#0d3b35" font-family="system-ui, sans-serif" font-size="24" font-weight="850">医療</text>
+    <rect x="308" width="154" height="54" rx="10" fill="#ffffff"/>
+    <text x="385" y="36" text-anchor="middle" fill="#0d3b35" font-family="system-ui, sans-serif" font-size="24" font-weight="850">子育て</text>
+    <rect x="482" width="154" height="54" rx="10" fill="#ffffff"/>
+    <text x="559" y="36" text-anchor="middle" fill="#0d3b35" font-family="system-ui, sans-serif" font-size="24" font-weight="850">地図</text>
+  </g>
+  <text x="96" y="566" fill="#edf4f0" opacity=".84" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', system-ui, sans-serif" font-size="24" font-weight="700">非公式・市民運営</text>
+</svg>

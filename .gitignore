@@ -10,4 +10,7 @@ public/generated/
 *.log
 .playwright-cli/
 output/playwright/
+.lighthouseci/
+playwright-report/
+test-results/
 *.cpuprofile

@@ -71,13 +71,25 @@ export function normalizePlace(value: unknown): Place | null {
   const category = toStringValue(record.category) ?? toStringValue(record.dataset_id) ?? "other";
   const subcategory = toStringValue(record.subcategory);
   const datasetId = toStringValue(record.dataset_id);
+  const categories = uniqueStrings([
+    subcategory ?? datasetId ?? category,
+    ...toStringArray(record.categories),
+    ...toStringArray(record.category_ids)
+  ]);
+  const categoryLabels = uniqueStrings([
+    ...toStringArray(record.categoryLabels),
+    ...toStringArray(record.category_labels),
+    ...categories.map(categoryLabel)
+  ]);
   const attributes = normalizeAttributes(record.attributes ?? record.attributes_json);
 
   return {
     id,
     name,
     category,
-    categoryLabel: categoryLabel(subcategory ?? datasetId ?? category),
+    categoryLabel: categoryLabels[0] ?? categoryLabel(subcategory ?? datasetId ?? category),
+    categories,
+    categoryLabels,
     subcategory,
     address: toStringValue(record.address),
     lat: toNumberValue(record.lat),
@@ -87,6 +99,7 @@ export function normalizePlace(value: unknown): Place | null {
     sourceUrl: toStringValue(record.source_url),
     firstSeenAt: toStringValue(record.first_seen_at),
     lastSeenAt: toStringValue(record.last_seen_at),
+    changedAt: toStringValue(record.changed_at),
     attributes
   };
 }
@@ -157,6 +170,7 @@ export function placesToFeatureCollection(places: Place[]): FeatureCollection {
           name: place.name,
           dataset_id: place.subcategory,
           category: place.subcategory ?? place.category,
+          categories: place.categories ?? [place.subcategory ?? place.category],
           source_name: "郡山市オープンデータ",
           unofficial: true
         }
@@ -232,6 +246,7 @@ function normalizePointFeature(value: unknown): PointFeature | null {
       name: toStringValue(properties.name),
       dataset_id: toStringValue(properties.dataset_id),
       category: toStringValue(properties.category),
+      categories: toStringArray(properties.categories),
       source_name: toStringValue(properties.source_name),
       unofficial: typeof properties.unofficial === "boolean" ? properties.unofficial : undefined
     }
@@ -279,6 +294,10 @@ function toStringArray(value: unknown): string[] {
   return Array.isArray(value)
     ? value.map(toStringValue).filter((item): item is string => Boolean(item))
     : [];
+}
+
+function uniqueStrings(values: Array<string | undefined>): string[] {
+  return Array.from(new Set(values.filter((value): value is string => Boolean(value))));
 }
 
 function toNumberValue(value: unknown): number | undefined {

@@ -2,13 +2,23 @@ export const searchSuggestions = ["保育", "AED", "Wi-Fi", "トイレ", "図書
 
 export const placeCategories = [
   { id: "all", label: "すべて" },
-  { id: "facility", label: "公共施設" },
-  { id: "childcare", label: "子育て" },
   { id: "aed", label: "AED" },
   { id: "medical", label: "医療" },
-  { id: "education", label: "学校" },
+  { id: "childcare", label: "子育て" },
+  { id: "public_toilets", label: "トイレ" },
   { id: "public_wifi", label: "Wi-Fi" },
-  { id: "public_toilets", label: "トイレ" }
+  { id: "education", label: "学校" },
+  { id: "facility", label: "公共施設" }
+] as const;
+
+export const homeCategoryOrder = [
+  "aed",
+  "medical",
+  "childcare",
+  "public_toilets",
+  "public_wifi",
+  "education",
+  "facility"
 ] as const;
 
 export const placeCategoryAliases: Record<string, string> = {
