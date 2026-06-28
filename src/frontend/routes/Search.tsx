@@ -66,8 +66,8 @@ export default function SearchPage() {
         <h1>探す</h1>
         <p>
           {hasOfficialSearch
-            ? "施設やお知らせをこのサイト内から探せます。市のページを探すときは、公式サイト検索を使えます。"
-            : "AED、トイレ、Wi-Fiなどの施設やお知らせを、このサイト内から探せます。"}
+            ? "市の手続き、くらしのお知らせ、施設情報をこのサイト内から探せます。市のページを探すときは、公式サイト検索を使えます。"
+            : "市の手続き、くらしのお知らせ、施設情報をこのサイト内から探せます。"}
         </p>
       </header>
 
@@ -186,7 +186,7 @@ function LocalSearchPanel({
       >
         {(query || category) && isLoading ? <CardSkeleton /> : null}
         {isError ? <SectionError message="検索結果を取得できませんでした。" /> : null}
-        {!query && !category ? <CategoryPrompt /> : null}
+        {!query && !category ? <SearchPrompt /> : null}
         {(query || category) && results?.total === 0 ? <ZeroResults /> : null}
         {items.map((item) => (
           <div key={`${item.type}:${item.id}`}>
@@ -233,22 +233,6 @@ function resolveSearchMode(params: URLSearchParams, hasOfficialSearch: boolean):
   }
 
   return "local";
-}
-
-function CategoryPrompt() {
-  return (
-    <div className="category-grid">
-      {placeCategories.slice(1).map((category) => (
-        <Link
-          key={category.id}
-          to={`/search?type=place&category=${encodeURIComponent(category.id)}`}
-          className="category-card"
-        >
-          <span>{category.label}</span>
-        </Link>
-      ))}
-    </div>
-  );
 }
 
 function buildSearchPath(
@@ -335,7 +319,15 @@ function handleSearchModeKeyDown(
 function ZeroResults() {
   return (
     <EmptyState title="見つかりませんでした">
-      言葉を短くするか、「AED」「トイレ」「子育て」などで探してみてください。
+      言葉を短くするか、「ごみ」「防災」「イベント」などで探してみてください。
+    </EmptyState>
+  );
+}
+
+function SearchPrompt() {
+  return (
+    <EmptyState title="検索語を入力してください">
+      手続き、くらしのお知らせ、施設名など、調べたい言葉を入力してください。
     </EmptyState>
   );
 }

@@ -10,16 +10,16 @@
   <circle cx="995" cy="66" r="28" fill="#ffffff"/>
   <text x="96" y="126" fill="#edf4f0" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="34" font-weight="800" letter-spacing="0">Civic Koriyama</text>
   <text x="96" y="255" fill="#ffffff" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', system-ui, sans-serif" font-size="72" font-weight="850" letter-spacing="0">郡山の施設・お知らせ</text>
-  <text x="96" y="350" fill="#edf4f0" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', system-ui, sans-serif" font-size="40" font-weight="700" letter-spacing="0">AED・医療・子育て施設や市のお知らせを探せます</text>
+  <text x="96" y="350" fill="#edf4f0" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', system-ui, sans-serif" font-size="40" font-weight="700" letter-spacing="0">手続き・くらしのお知らせ・施設情報を探せます</text>
   <g transform="translate(96 452)">
     <rect width="134" height="54" rx="10" fill="#ffffff"/>
-    <text x="67" y="36" text-anchor="middle" fill="#0d3b35" font-family="system-ui, sans-serif" font-size="24" font-weight="850">AED</text>
+    <text x="67" y="36" text-anchor="middle" fill="#0d3b35" font-family="system-ui, sans-serif" font-size="24" font-weight="850">ごみ</text>
     <rect x="154" width="134" height="54" rx="10" fill="#ffffff"/>
-    <text x="221" y="36" text-anchor="middle" fill="#0d3b35" font-family="system-ui, sans-serif" font-size="24" font-weight="850">医療</text>
+    <text x="221" y="36" text-anchor="middle" fill="#0d3b35" font-family="system-ui, sans-serif" font-size="24" font-weight="850">住民票</text>
     <rect x="308" width="154" height="54" rx="10" fill="#ffffff"/>
     <text x="385" y="36" text-anchor="middle" fill="#0d3b35" font-family="system-ui, sans-serif" font-size="24" font-weight="850">子育て</text>
     <rect x="482" width="154" height="54" rx="10" fill="#ffffff"/>
-    <text x="559" y="36" text-anchor="middle" fill="#0d3b35" font-family="system-ui, sans-serif" font-size="24" font-weight="850">地図</text>
+    <text x="559" y="36" text-anchor="middle" fill="#0d3b35" font-family="system-ui, sans-serif" font-size="24" font-weight="850">防災</text>
   </g>
   <text x="96" y="566" fill="#edf4f0" opacity=".84" font-family="'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', system-ui, sans-serif" font-size="24" font-weight="700">非公式・市民運営</text>
 </svg>

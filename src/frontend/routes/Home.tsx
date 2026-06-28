@@ -1,14 +1,13 @@
 import { KeyboardEvent, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Baby, Building2, HeartPulse, School, Stethoscope, Toilet, Wifi } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import type { HomeData } from "../../shared/types";
 import { OfficialSearchBox } from "../components/OfficialSiteSearch";
-import { CardSkeleton, EmptyState, Section, SectionError } from "../components/Section";
+import { CardSkeleton, Section, SectionError } from "../components/Section";
 import { NewsCard } from "../components/NewsCard";
 import { PlaceCard } from "../components/PlaceCard";
 import { SearchBox } from "../components/SearchBox";
-import { homeCategoryOrder, placeCategories, searchSuggestions } from "../lib/constants";
+import { searchSuggestions } from "../lib/constants";
 import { searchConfig } from "../lib/searchConfig";
 import { generatedFiles, getGeneratedJson } from "../lib/staticDataClient";
 
@@ -18,16 +17,6 @@ const searchModes = [
   { id: "local", label: "サイト内を探す" },
   { id: "official", label: "公式サイトを探す" }
 ] as const;
-
-const categoryIcons = {
-  aed: HeartPulse,
-  medical: Stethoscope,
-  childcare: Baby,
-  public_toilets: Toilet,
-  public_wifi: Wifi,
-  education: School,
-  facility: Building2
-} as const;
 
 export default function Home() {
   const navigate = useNavigate();
@@ -42,7 +31,6 @@ export default function Home() {
   const home = homeQuery.data;
   const featuredTopicIds = new Set(home?.featured_topics.map((entry) => entry.id) ?? []);
   const latestNews = home?.news.filter((entry) => !featuredTopicIds.has(entry.id)).slice(0, 3) ?? [];
-  const homeCategories = buildHomeCategories(home);
 
   return (
     <div className="page page--home">
@@ -52,7 +40,7 @@ export default function Home() {
           <span>非公式・市民運営</span>
         </div>
         <h1>郡山の施設・お知らせ</h1>
-        <p>AED、医療、子育て施設や市のお知らせを探せます。</p>
+        <p>市の手続き、くらしのお知らせ、施設情報をまとめて探せます。</p>
         <div className="home-search-panel">
           {hasOfficialSearch ? (
             <div className="home-search-tabs" role="tablist" aria-label="検索の種類">
@@ -108,33 +96,6 @@ export default function Home() {
         ) : null}
       </header>
 
-      <Section title="施設カテゴリ" className="home-categories">
-        {homeQuery.isLoading ? <CardSkeleton /> : null}
-        {homeCategories.length ? (
-          <div className="category-grid category-grid--home">
-            {homeCategories.map((category) => {
-              const Icon = categoryIcons[category.id];
-
-              return (
-                <Link
-                  key={category.id}
-                  to={`/search?type=place&category=${encodeURIComponent(category.id)}`}
-                  className="category-card"
-                >
-                  <span className="category-card__label">
-                    <Icon aria-hidden="true" size={20} />
-                    {category.label}
-                  </span>
-                  <strong>{category.count.toLocaleString("ja-JP")}件</strong>
-                </Link>
-              );
-            })}
-          </div>
-        ) : homeQuery.isLoading ? null : (
-          <EmptyState title="カテゴリを準備中">キーワード検索から施設を探せます。</EmptyState>
-        )}
-      </Section>
-
       {homeQuery.isLoading ? (
         <Section title="重要なお知らせ" className="home-featured">
           <CardSkeleton />
@@ -175,29 +136,6 @@ export default function Home() {
       </Section>
     </div>
   );
-}
-
-type HomeCategory = {
-  id: (typeof homeCategoryOrder)[number];
-  label: string;
-  count: number;
-};
-
-function buildHomeCategories(home: HomeData | undefined): HomeCategory[] {
-  if (!home) {
-    return [];
-  }
-
-  const counts = new Map(home?.category_counts.map((category) => [category.id, category.count]) ?? []);
-
-  return homeCategoryOrder.map((id) => {
-    const category = placeCategories.find((item) => item.id === id);
-    return {
-      id,
-      label: category?.label ?? id,
-      count: counts.get(id) ?? 0
-    };
-  });
 }
 
 function handleSearchModeKeyDown(

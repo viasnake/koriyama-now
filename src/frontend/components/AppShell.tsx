@@ -112,8 +112,8 @@ export function AppShell({ children }: AppShellProps) {
 function routeDocumentMeta(pathname: string) {
   if (pathname === "/search") {
     return {
-      title: "AED・医療施設を探す | Civic Koriyama",
-      description: "郡山市のAED、医療、子育て、トイレ、Wi-Fiなどの施設とお知らせを検索できます。"
+      title: "郡山市の情報を探す | Civic Koriyama",
+      description: "郡山市の手続き、くらしのお知らせ、施設情報を検索できます。"
     };
   }
   if (pathname === "/news") {
@@ -125,7 +125,7 @@ function routeDocumentMeta(pathname: string) {
   if (pathname === "/map") {
     return {
       title: "郡山市の施設マップ | Civic Koriyama",
-      description: "AED、医療、子育て、トイレ、Wi-Fiなど郡山市内の施設を地図で確認できます。"
+      description: "郡山市内の施設情報を地図で確認できます。"
     };
   }
   if (pathname.startsWith("/place/")) {
@@ -143,7 +143,7 @@ function routeDocumentMeta(pathname: string) {
 
   return {
     title: "郡山市の施設・お知らせ検索 | Civic Koriyama",
-    description: "郡山市のAED、医療、子育て施設や市のお知らせを探せる非公式の市民向けデータサイトです。"
+    description: "郡山市の手続き、くらしのお知らせ、施設情報を探せる非公式の市民向けデータサイトです。"
   };
 }
 

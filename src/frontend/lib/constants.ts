@@ -1,4 +1,4 @@
-export const searchSuggestions = ["保育", "AED", "Wi-Fi", "トイレ", "図書館", "学校", "医療", "駅前"];
+export const searchSuggestions = ["ごみ", "住民票", "子育て", "防災", "税金", "イベント", "補助金", "健康"];
 
 export const placeCategories = [
   { id: "all", label: "すべて" },
@@ -9,16 +9,6 @@ export const placeCategories = [
   { id: "public_wifi", label: "Wi-Fi" },
   { id: "education", label: "学校" },
   { id: "facility", label: "公共施設" }
-] as const;
-
-export const homeCategoryOrder = [
-  "aed",
-  "medical",
-  "childcare",
-  "public_toilets",
-  "public_wifi",
-  "education",
-  "facility"
 ] as const;
 
 export const placeCategoryAliases: Record<string, string> = {

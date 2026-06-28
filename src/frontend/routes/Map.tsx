@@ -96,7 +96,7 @@ export default function MapPage() {
         <p>{filteredCount.toLocaleString("ja-JP")}件を表示しています。</p>
       </header>
 
-      <div className="tab-row tab-row--sticky" role="group" aria-label="施設カテゴリ">
+      <div className="tab-row tab-row--sticky" role="group" aria-label="施設の絞り込み">
         {placeCategories.map((item) => (
           <button
             type="button"
